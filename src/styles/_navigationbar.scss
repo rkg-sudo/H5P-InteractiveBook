@@ -1,0 +1,520 @@
+// .h5p-interactive-book  {
+//   width: 75rem;
+//   height: 52.5rem;
+//   margin: auto;
+//   overflow-y: scroll !important;
+//   transform-origin: left top;
+// }
+
+.h5p-interactive-book-navigation {
+  // background-color: $background-color;
+  // border: .0625rem solid black;
+  // background-color: rgb(225 227 229 / 75%);
+  // box-shadow: .625rem .625rem 6.25rem 0rem rgba(0, 0, 0, 0.25);
+  background-color: transparent !important;
+  box-shadow: none !important;
+  background-size: cover;
+  // box-shadow: .625em .625em 1.875em $dark-grey-20;
+  // max-width: 0;
+  // min-height: 15em;
+  // overflow: hidden;
+  overflow: visible; /* ✅ ALLOW CHILD TO OVERFLOW for overlay effect */
+  position: relative;
+  // top: 0;
+  transition: width 0.3s ease-in-out, flex-basis 0.3s ease-in-out, max-width 0.3s ease-in-out, padding 0.3s ease-in-out;
+  // flex: 0 0 auto;
+  z-index: 2;
+  // display: flex;
+  // flex-direction: column;
+  // margin: 1.875rem .9375rem 1.875rem 1.875rem;
+  // border-radius: .75rem;
+  height: 100%;
+
+  >a {
+    font-weight: bold;
+  }
+
+  >div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .navigation-list {
+    font-family: "Open Sans";
+    // position: fixed;
+    // margin: 0 1.875rem;
+    padding: 0;
+    // max-height: -webkit-fill-available;
+    overflow: auto;
+    z-index: 5;
+    // transition: width 0.3s linear;
+
+    /* 🎯 68% HEIGHT APPROACH: Simple percentage-based height, works across all screen sizes */
+    max-height: 68vh; /* Consistent maximum height */
+
+    // li:first-child {
+    //   button {
+    //     border-radius: .75rem .75rem 0 0;
+    //   }
+    // }
+
+    // li:last-child {
+    //   button {
+    //     border-radius: 0 0 .75rem .75rem;
+    //   }
+    // }
+  }
+
+  .navigation-list-sidebar {
+    /* ✅ SIMPLE STABLE APPROACH: No position changes */
+    width: 100%; /* Fill parent width by default */
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+    z-index: 2;
+    border-radius: 0.75rem;
+    
+    /* ✅ STABLE HOVER: Direct hover on ul itself */
+    &:hover {
+      width: var(--navigation-expanded-width, 24.375rem); /* ✅ DYNAMIC WIDTH FROM JS */
+      // z-index: 3;
+    }
+  }
+
+  // .navigation-list-animation {
+  //   animation: reduceWidth 0.3s ease forwards;
+  //   @keyframes reduceWidth {
+  //     from {
+  //       width: 24.375rem; /* Start width */
+  //     }
+  //     to {
+  //       width: clamp(5.6875rem, 5.31vw, 13.82rem);
+  //     }
+  //   }
+
+  // }
+
+  .simple-view-navigation-list {
+    li {
+      margin: .75rem 0;
+      button {
+        border-radius: clamp(3.125rem, 3.472vw, 7.59rem) !important;
+        // height: clamp(4.437rem, 4.93vw, 10.78rem) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+
+        .h5p-interactive-book-navigation-chapter-index {
+          margin: auto;
+        }
+      }
+
+      .h5p-interactive-book-navigation-chapter-button {
+        height: initial;
+      }
+    }
+
+    .h5p-interactive-book-navigation-chapter-home-icon {
+      height: clamp(1.5rem, 1.66vw, 3.64rem);
+      // margin-left: 0;
+    }
+
+    .h5p-interactive-book-navigation-chapter {
+      &:not(:last-child) {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .large-navigation-list {
+    // height: 0;
+    overflow-y: auto;
+    flex: 1 1 auto;
+    // min-height: 58em;
+  }
+}
+
+/* WebKit scrollbars - use higher specificity and !important to avoid overrides */
+.h5p-interactive-book-navigation ul.navigation-list::-webkit-scrollbar {
+  width: 2px !important; /* visible thumb width */
+  background: transparent !important; /* track background */
+}
+
+.h5p-interactive-book-navigation ul.navigation-list::-webkit-scrollbar-track {
+  background: transparent !important; /* keep track transparent so padding shows through */
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  margin-right: 1.25rem;
+  padding-right: 1.25rem; /* Prevent thumb from touching content */
+  scroll-padding: 1.25rem;
+  scroll-margin: 1.25rem;
+}
+
+.h5p-interactive-book-navigation ul.navigation-list::-webkit-scrollbar-thumb {
+  /* Visual thumb color and rounded corners. Do not force fixed height - browsers
+     size the thumb proportionally to content. If pixel-perfect thumb is required,
+     implement a custom JS scrollbar. */
+  background: #6A7070 !important;
+  border-radius: 10px !important;
+  margin-right: 1.25rem;
+}
+
+/* Remove top/bottom arrow buttons on WebKit-based browsers */
+ul.navigation-list::-webkit-scrollbar-button,
+ul.navigation-list::-webkit-scrollbar-button:single-button,
+ul.navigation-list::-webkit-scrollbar-button:vertical:decrement {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Make scrollbar corner transparent */
+ul.navigation-list::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.h5p-interactive-book-navigation-sectionlist {
+  background-color: $background-color;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  transition: max-height .5s ease-in;
+
+  >:first-child {
+    margin-top: .5em;
+  }
+
+  >:last-child {
+    border-bottom: solid .0625rem $ghost-white;
+    padding-bottom: .5em;
+  }
+
+  .h5p-interactive-book-navigation-section {
+    // background: transparent;
+    color: $mud;
+    font-size: .875em;
+    font-weight: 400;
+    line-height: 1.8;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .section-button {
+      position: relative;
+      background: transparent;
+      border: 0;
+      padding: 0 1.125em;
+      max-width: 100%;
+    }
+
+    .h5p-interactive-book-navigation-section-icon {
+      position: absolute;
+      color: $black;
+      font-size: .3125rem;
+      visibility: hidden;
+      width: 2.17em;
+      top: 50%;
+      transform: translateY(-50%);
+
+      &.h5p-interactive-book-navigation-section-task {
+        visibility: inherit;
+      }
+    }
+
+    .h5p-interactive-book-navigation-section-title {
+      font-size: .85em;
+      margin-left: .9375rem;
+      margin-right: 2em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  :hover {
+    // color: var(--color-base, $base-color);
+    cursor: pointer;
+  }
+}
+
+.h5p-interactive-book-navigation-closed {
+  .h5p-interactive-book-navigation-chapter-button {
+    // background-color: var(--color-base-5, $background-color);
+    // background-color: rgb(225 227 229 / 75%);
+    background-color: #FFFFFF;
+  }
+
+  .h5p-interactive-book-navigation-sectionlist {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .5s ease-out;
+    visibility: hidden;
+  }
+}
+
+.h5p-interactive-book-navigation-chapter {
+  list-style: none;
+  // line-height: 1.7;
+
+  &:first-child {
+    border-radius: .75rem .75rem 0 0;
+  }
+
+  &:not(:last-child) {
+    border-bottom: .0625rem solid white;
+  }
+}
+
+.h5p-interactive-book-navigation-chapter-button {
+  border-radius: 0;
+  align-items: center;
+  // background-color: var(--color-base-10, $base-color-10);
+  // background-color: rgb(225 227 229 / 75%);
+  background-color: #FFFFFF;
+  background-size: cover;
+  border: 0;
+  color: $mud;
+  display: flex;
+  font-family: "Open Sans";
+  // height: 3.438em;
+  margin: 0;
+  padding: 0;
+  text-align: initial;
+  text-decoration: none solid $mud;
+  width: 100%;
+  position: relative;
+  // min-height: clamp(3.68rem, 4.08vw, 8.94rem);
+  // overflow: auto;
+  transition: padding-inline 0.3s ease-in-out, width 0.3s ease-in-out, justify-content 0.3s ease-in-out;
+
+  &:hover {
+    // background-color: var(--color-base-5, $base-color-5);
+    // background-color: white;
+    background-color: #DBDBDB;
+    color: #151515;
+    cursor: pointer;
+
+    // ✅ PREVENT HOVER WHEN DROPDOWN IS BEING USED
+    &:has(.toc-des-icon-toggle-wrapper:hover):not(.h5p-interactive-book-navigation-current) {
+      background-color: #FFFFFF;
+      color: #151515;
+    }
+  }
+  
+  &.h5p-interactive-book-navigation-current {
+    // background-color: var(--color-base-10, $base-color-10);
+    // background-color: white;
+    background-color: #151515;
+    color: #FFFFFF;
+    
+    // ✅ SELECTED STATE ALWAYS KEEPS ITS COLORS
+    &:hover {
+      background-color: #151515;
+      color: #FFFFFF;
+    }
+
+    // ✅ EVEN WHEN DROPDOWN IS HOVERED, SELECTED STATE STAYS THE SAME
+    &:hover:has(.toc-des-icon-toggle-wrapper:hover) {
+      background-color: #151515;
+      color: #FFFFFF;
+    }
+  }
+
+  .number-and-icon-wrapper {
+    display: flex;
+    align-items: center;
+    // width: 100%;
+    // justify-content: center;
+    transition: padding-left 0.3s ease-in-out, justify-content 0.3s ease-in-out, width 0.3s ease-in-out;
+  }
+
+  .h5p-interactive-book-navigation-chapter-title-text {
+    overflow: hidden;
+    text-decoration: none solid var(--color-base, $base-color);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: none;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-family: "Open Sans";
+    // line-height: normal;
+    //height: 3.6875rem;
+    // margin-left: 2.5rem;
+
+    // /* ✅ SMOOTH TRANSITIONS: Width-based visibility system */
+    // width: 0; /* ✅ COLLAPSED BY DEFAULT */
+    // overflow: hidden; /* ✅ HIDE OVERFLOW */
+    // transition: width 0.3s ease, margin-left 0.3s ease; /* ✅ SMOOTH TRANSITION */
+    // white-space: nowrap; /* ✅ KEEP TEXT IN SINGLE LINE */
+    
+    // /* ✅ SHOW TEXT: When ul navigation list is hovered */
+    // .navigation-list-sidebar:hover & {
+    //   width: auto; /* ✅ ALLOW NATURAL WIDTH */
+    //   margin-left: 0.75rem; /* ✅ ADD SPACING FROM NUMBERING/ICON */
+    // }
+
+    .h5p-interactive-book-navigation-chapter-item-title-text {
+      font-size: clamp(.8656rem, 0.96vw, 2.10rem);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .h5p-interactive-book-navigation-chapter-item-description {
+      font-size: clamp(.8344rem, 0.92vw, 2.02rem);
+      font-weight: 400;
+    }
+
+    .toc-description {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1; // single line clamp for all
+      line-clamp: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      min-width: 0;
+      cursor: pointer;
+      
+      &.expanded {
+        -webkit-line-clamp: unset;
+        line-clamp: unset;
+        display: block; // allow full text when expanded (mobile toggle)
+        white-space: normal;
+      }
+    }
+  }
+
+  .h5p-interactive-book-navigation-chapter-accordion {
+    align-self: center;
+    font-size: .65em;
+    width: 1em;
+    position: absolute;
+    left: .9375rem;
+    top: 1.0625rem;
+
+    &.hidden {
+      opacity: 0;
+      visibility: none;
+    }
+  }
+
+  .h5p-interactive-book-navigation-chapter-progress {
+    align-self: center;
+    font-size: .75em;
+    position: absolute;
+    right: .9375rem;
+    top: 1.0625rem;
+  }
+
+  .toc-des-icon-toggle-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    height: 100%; /* Fallback */
+    height: -webkit-fill-available; /* Webkit */
+    height: stretch; /* Standard */
+    align-items: flex-start; /* Positions arrow at top */
+    
+    // /* ✅ SMOOTH TRANSITIONS: Width-based visibility system */
+    // width: 0; /* ✅ COLLAPSED BY DEFAULT */
+    // overflow: hidden; /* ✅ HIDE OVERFLOW */
+    // transition: width 0.3s ease; /* ✅ SMOOTH TRANSITION */
+    
+    // /* ✅ SHOW TOGGLE: When ul navigation list is hovered */
+    // .navigation-list-sidebar:hover & {
+    //   width: auto; /* ✅ ALLOW NATURAL WIDTH */
+    // }
+
+    .toggle-description {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      font-size: clamp(0.79rem, 0.95vw, 2.10rem);
+    }
+  }
+
+  /*  &:active {
+    background-color: var(--color-base-10, $base-color-10);
+  } */
+}
+
+
+.h5p-interactive-book-navigation-chapter-index {
+  font-size: clamp(.86rem, 1.03vw, 2.28rem);;
+  font-weight: 700;
+  justify-content: end;
+  // margin-left: 1.4375rem;
+}
+
+.h5p-interactive-book-navigation-chapter-icon {
+  display: flex;
+  width: clamp(1.5rem, 1.66vw, 3.64rem);
+  height: clamp(2.81rem, 3.12vw, 6.82rem);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  // margin-left: 0.4rem;
+  // margin-right: 0.4rem;
+  align-items: center;
+}
+
+.h5p-interactive-book-navigation-chapter-home-icon {
+  display: flex;
+  width: clamp(1.5rem, 1.66vw, 3.64rem);
+  height: clamp(2.81rem, 3.12vw, 6.82rem);
+  // background-image: url(./../assets/toc-icons/homeIcon.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  // margin-left: 0.4rem;
+  // margin-right: 0.4rem;
+  // padding: 0.2rem;
+  align-items: center;
+}
+
+.h5p-interactive-book-navigation-chapter-home-text {
+  font-size: 1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-left: .9375rem;
+  margin-right: 2em;
+}
+
+@media(max-width: 48rem) {
+  .h5p-interactive-book-navigation {
+    .navigation-list {
+      min-height: 31.25rem;
+      // &:hover {
+      //   width: 100%;
+      // }
+    }
+  }
+
+  .h5p-interactive-book-navigation-chapter-button {
+    color: black;
+  }
+
+  /* Mobile: allow chapter title text to wrap instead of forcing single-line truncation */
+  .h5p-interactive-book-navigation {
+    .h5p-interactive-book-navigation-chapter-title-text {
+      white-space: normal; /* allow wrapping on small screens */
+      // keep overflow handling but allow multi-line
+      overflow-wrap: anywhere;
+      -webkit-line-clamp: unset;
+    }
+  }
+}
+
+@media (min-width: 1680px) {
+  .h5p-interactive-book-navigation-chapter-button {
+    .h5p-interactive-book-navigation-chapter-title-text {
+      .h5p-interactive-book-navigation-chapter-item-description {
+            margin-top: clamp(0.2rem, 0.4vw, 1rem);
+      }
+    }
+  } 
+}
+

@@ -1,0 +1,503 @@
+// ─── Recall Accordion ──────────────────────────────────────────────────────
+//
+// NEW STRUCTURE: Wrapper is created ONLY for chapters that have a recall activity.
+// The wrapper contains:
+//   1. Recall element (accordion or blocking overlay) - FIRST child
+//   2. Chapter content (.h5p-interactive-book-chapter) - SECOND child
+//
+// This allows independent border radius on both recall and main content.
+// Chapters without recall activities have NO wrapper and render normally.
+// ───────────────────────────────────────────────────────────────────────────
+
+$recall-border-radius: .8125rem;
+$recall-transition: 0.25s ease;
+
+// ── Wrapper (created ONLY when chapter has recall activity) ────────────────
+.h5p-interactive-book-chapter-wrapper {
+  position: relative; // Required for absolute positioning of blocking overlay
+  width: 100%;
+  display: none; // Hidden by default, like chapters
+  flex-direction: column;
+  gap: 0;
+  min-height: 100%; // Ensure wrapper takes full height
+  
+  // Show wrapper when child chapter is current
+  &:has(> .h5p-interactive-book-chapter.h5p-interactive-book-current) {
+    display: flex;
+  }
+  
+  // Allow separate border radius for recall and content
+  > .recall-accordion {
+    border-radius: $recall-border-radius;
+    flex-shrink: 0; // Don't shrink accordion
+  }
+  
+  > .h5p-interactive-book-chapter {
+    border-radius: $recall-border-radius;
+    flex: 1; // Take remaining space
+    display: block !important; // Override chapter's display:none when inside wrapper
+    
+    // When chapter is current, ensure it's visible
+    &.h5p-interactive-book-current {
+      display: block !important;
+    }
+  }
+}
+
+.recall-accordion {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+  border-top-left-radius: $recall-border-radius;
+  border-top-right-radius: $recall-border-radius;
+  overflow: hidden;
+  transition: border-color $recall-transition, box-shadow $recall-transition;
+
+  // ── Disabled state ──────────────────────────────────────────────────────
+  &.recall-accordion--disabled {
+    opacity: 0.55;
+
+    .recall-accordion__header {
+      cursor: not-allowed;
+    }
+  }
+
+  // ── Enabled state ───────────────────────────────────────────────────────
+  &.recall-accordion--enabled {
+
+    .recall-accordion__icon {
+      background-color: #1B7A7A;
+    }
+  }
+
+  // ── Expanded state ──────────────────────────────────────────────────────
+  &.recall-accordion--expanded {
+
+    .recall-accordion__chevron svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  // ── Always-visible title bar (was __header) ─────────────────────────────
+  &__title-bar {
+    display: flex;
+    align-items: center;
+    // gap: 0.5rem; // set via JS with generateClampCSS
+    width: 100%;
+    // padding: 0.75rem 1rem; // set via JS with generateClampCSS
+    border: none;
+    background-color: #f3f4f5;
+    font-family: inherit;
+    text-align: left;
+    box-sizing: border-box;
+    transition: background-color $recall-transition;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  // ── Circular icon ───────────────────────────────────────────────────────
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.25rem;   // 36px
+    height: 2.25rem;  // 36px
+    border-radius: 50%;
+    background-color: #4B5563; // default disabled — teal applied when enabled
+    color: #FFFFFF;
+    transition: background-color $recall-transition;
+
+    svg {
+      width: 1.5rem;   // 24px
+      height: 1.5rem;  // 24px
+    }
+  }
+
+  // ── Header text: title + toggle hint ────────────────────────────────────
+  &__header-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    // gap: 0.5rem; // set via JS with generateClampCSS
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: rgba(21, 21, 21, 1);
+    line-height: 1.2;
+  }
+
+  &__subtitle {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(40, 44, 45, 1);
+    line-height: 1.2;
+  }
+
+  // ── Right-side toggle group (eye + Show/Hide label + chevron) ───────────────────────
+  // First child of contentArea — acts as the Hide/collapse trigger at the top of content
+  &__toggle-group {
+    display: flex;
+    align-items: center;
+    // gap: 0.5rem; // set via JS with generateClampCSS
+    width: 100%;
+    // padding: 0.75rem 0; // set via JS with generateClampCSS
+    flex-shrink: 0;
+    color: rgba(21, 21, 21, 1);
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  &__toggle-eye {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background-color: #1b7a7a; // Teal default - can be themed via themeData.recall.toggleIconBackgroundColor
+    flex-shrink: 0;
+    transition: transform 0.2s ease, background-color 0.25s ease;
+
+    svg {
+      display: block;
+      color: #FFFFFF; // White icon stroke color - can be themed
+    }
+
+    // Hover effect - slight scale
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__toggle-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(21, 21, 21, 1);
+  }
+
+  // ── Chevron ─────────────────────────────────────────────────────────────
+  &__chevron {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: rgba(21, 21, 21, 1);
+
+    svg {
+      display: block;
+      width: 1.25rem;  // 20px - consistent size for both Show and Hide states
+      height: 1.25rem; // 20px
+      transition: transform $recall-transition;
+    }
+  }
+
+  // ── Panel ───────────────────────────────────────────────────────────────
+  &__panel {
+    background-color: #FFFFFF;
+    // padding: .75rem 1.25rem; // set via JS with generateClampCSS
+    // always visible — toggleGroup lives here as permanent Show/Hide trigger
+  }
+
+  // ── Content wrapper ────────────────────────────────────────────────────────
+  &__content-wrapper {
+    // padding: 0 1.25rem; // set via JS with generateClampCSS
+    border: 1px solid rgba(0, 109, 113, 1);
+    border-radius: $recall-border-radius;
+  }
+
+  // ── Info banner ─────────────────────────────────────────────────────────
+  &__info-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    margin: 0.75rem 0.75rem 0;     // sits above the content box, same inset
+    padding: 0.625rem 0.75rem;
+    background-color: #EFF6FF;
+    border: 1.5px solid #BFDBFE;
+    border-radius: $recall-border-radius;
+  }
+
+  &__info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    color: #2563EB;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  &__info-text {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #1E40AF;
+
+    strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.125rem;
+    }
+
+    p {
+      margin: 0;
+      color: #1D4ED8;
+    }
+  }
+
+  // ── Recalled content ────────────────────────────────────────────────────
+  &__content {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: rgba(21, 21, 21, 1);
+    line-height: 1.2;
+    overflow: hidden;           // hides content beyond max-height clamp
+    transition: max-height 0.3s ease;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__readonly-note {
+    display: flex;
+    align-items: center;
+    // gap: 0.625rem; // set via JS with generateClampCSS
+    // padding: 0.5rem 0; // set via JS with generateClampCSS
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: rgba(21, 21, 21, 1);
+    line-height: 1.2;
+  }
+
+  &__readonly-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: rgba(21, 21, 21, 1);
+  }
+
+  &__question-text {
+    font-size: 1rem;
+    font-weight: 800;
+    color: rgba(21, 21, 21, 1);
+    line-height: 1.2;
+    // padding: 0.75rem 0; // set via JS with generateClampCSS
+  }
+
+  // ── Activity wrapper (rendered below section header items) ───────────────
+  &__activity-wrapper {
+    background-color: #FFFFFF;
+    overflow: hidden;
+
+    // .h5p-interactive-book-chapter defaults to display:none and only shows
+    // when it has the h5p-interactive-book-current class (set by the book's
+    // chapter navigation). Inside the recall wrapper it will never get that
+    // class, so we must force it visible — same pattern as .foc-modal-body.
+    .h5p-interactive-book-chapter {
+      display: block !important;
+      height: auto !important;
+    }
+  }
+
+
+
+  // ── View more / View less toggle button ──────────────────────────────────
+  &__view-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    // padding: 0.75rem; // set via JS with generateClampCSS
+    border: none;
+    background: none;
+    color: rgba(40, 44, 45, 1);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color $recall-transition;
+
+    // &:hover {
+    //   background-color: rgba(27, 122, 122, 0.05);
+    // }
+
+    // &:focus-visible {
+    //   outline: 2px solid #1B7A7A;
+    //   outline-offset: -2px;
+    // }
+
+    // &[hidden] {
+    //   display: none;
+    // }
+  }
+
+  &__view-toggle-chevron {
+    display: flex;
+    align-items: center;
+    transition: transform $recall-transition;
+
+    svg {
+      display: block;
+      width: 1.5rem;  // 24px
+      height: 1.5rem; // 24px
+    }
+
+    // When "View less" — chevron points up
+    &--up {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+// Hide H5P chrome elements only when the activity is rendered inside the recall accordion.
+// `!important` is required to beat H5P's own inline/high-specificity display rules,
+// which is why footer was occasionally visible without it.
+.recall-accordion__activity-wrapper {
+  .h5p-recall-content {
+    header {
+      display: none !important;
+    }
+
+    footer {
+      display: none !important;
+    }
+
+    .draggable-container-ui {
+      display: none !important;
+    }
+  }
+
+  // :has() covers the case where .draggable-container-ui renders OUTSIDE
+  // .h5p-recall-content but still inside the activity wrapper — e.g. it may
+  // be injected as a sibling rather than a child of the header-section-wrapper.
+  // This rule fires the moment .h5p-recall-content exists anywhere in the wrapper.
+  &:has(.h5p-recall-content) .draggable-container-ui {
+    display: none !important;
+  }
+}
+
+// ─── Recall blocking overlay ───────────────────────────────────────────────
+// Shown over a chapter when the linked previous activity is not yet completed.
+// Sits as the last child of .h5p-interactive-book-chapter (position: relative).
+.recall-block-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+  border-radius: $recall-border-radius;
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // gap: 1.25rem; // set via JS with generateClampCSS
+    // padding: 1.250rem 0; // set via JS with generateClampCSS
+    background-color: #FFFFFF;
+    border-radius: 0.75rem;
+    text-align: center;
+    max-width: 31.75rem;
+    max-height: 23.188rem;
+    width: 90%;
+    height: 90%;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(252, 99, 15, 1);
+    width: 2.031rem;
+    height: 2.031rem;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.250rem;
+    font-weight: 600;
+    color: rgba(21, 21, 21, 1);
+    line-height: 1.5;
+  }
+
+  &__desc {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgba(40, 44, 45, 1);
+    line-height: 1.5;
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.75rem;
+    background-color: rgba(255, 210, 0, 1);
+    color: rgba(21, 21, 21, 1);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.2s ease;
+    line-height: 1;
+    gap: 0.5rem;
+
+    &:hover {
+      background-color: rgba(217, 119, 6, 1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(255, 210, 0, 1);
+      outline-offset: 3px;
+    }
+  }
+}
+
+// ── Mobile-specific styles ──────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .recall-accordion {
+    margin-bottom: 0; // Remove margin-bottom on mobile
+
+    &__panel {
+      padding: 0.75rem 1rem; // Adjust padding for mobile
+    }
+
+    &__readonly-note {
+      align-items: flex-start; // Align to top on mobile
+    }
+  }
+
+  .recall-block-overlay{
+    border-radius: 0;
+  }
+
+  .h5p-interactive-book-chapter-wrapper {
+    > .recall-accordion {
+      border-radius: 0; // Remove border-radius on mobile
+    }
+
+    > .h5p-interactive-book-chapter {
+      border-radius: 0; // Remove border-radius on mobile
+
+      &.h5p-interactive-book-current {
+        border-radius: 0; // Remove border-radius on mobile
+      }
+    }
+  }
+}

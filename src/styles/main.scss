@@ -1,0 +1,355 @@
+$background-color: #fff;
+$base-color: #1768C4;
+$base-color-5: rgba($base-color, .05);
+$base-color-10: rgba($base-color, .1);
+$base-color-20: rgba($base-color, .2);
+$base-color-50: rgba($base-color, .5);
+$base-color-90: rgba($base-color, .9);
+$base-color-95: rgba($base-color, .95);
+$black: #000;
+$black-151515: #151515;
+$black-20: rgba(0, 0, 0, .2);
+$cool-grey: #eee;
+$dark-grey-20: rgba(166, 166, 166, .2);
+$ghost-white: #e9e4ed;
+$light-grey: #bebebe;
+$medium-grey: #363636;
+$scrollbar: #6C7992;
+$scrollbar-30: rgba($scrollbar, .35);
+$scrollbar-75: rgba($scrollbar, .75);
+$mud: #4c4452;
+$mud-80: rgba($mud, .8);
+
+$fullscreen-button-size: 1.8em;
+html {
+  font-size: 16px;
+}
+
+.h5p-interactive-book {
+  scroll-behavior: smooth;
+  &.h5p-interactive-book-small {
+    .h5p-interactive-book-main {
+      
+      // Add transition for mobile menu toggle
+      transition: transform 0.3s ease-in-out;
+
+      &.h5p-interactive-book-navigation-open {
+
+        .h5p-interactive-book-navigation {
+          // max-width: 100%;
+          // width: 100%;
+
+          .large-navigation-list {
+            height: auto;
+          }
+        }
+
+        .h5p-interactive-book-navigation-chapter-accordion {
+          opacity: 0;
+          visibility: hidden;
+        }
+
+        .h5p-interactive-book-navigation-sectionlist {
+          max-height: none;
+          overflow: inherit;
+          transition: max-height .5s ease-in;
+          visibility: inherit;
+          padding-left: 0.3rem;
+        }
+
+        .h5p-interactive-book-content {
+          display: none;
+          transition: opacity 0.3s ease-in-out;
+        }
+      }
+    }
+  }
+
+  .h5p-interactive-book-navigation-hidden .h5p-interactive-book-navigation {
+    display: none;
+  }
+
+  &.h5p-scrollable-fullscreen.h5p-semi-fullscreen {
+    overflow-y: scroll;
+    /* has to be scroll, not auto */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .h5p-scrollable-fullscreen {
+    overflow-y: auto;
+  }
+
+  &.h5p-fullscreen {
+    background-color: $background-color;
+  }
+
+  .h5p-content-controls {
+    display: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: .375rem;
+    background: $scrollbar-30;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $scrollbar-75;
+    border-radius: .25rem;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: $scrollbar;
+  }
+}
+.activity-rendering-container {
+    overflow: auto;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+.h5p-interactive-book-main {
+  width: 100%;
+  display: flex;
+  align-items: flex-start; // TOC and content size independently — neither stretches to match the other
+  // flex: 1;
+  // overflow: auto;
+  position: relative;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  background-color: #D9D9D9;
+
+  // &.h5p-interactive-book-navigation-open .h5p-interactive-book-navigation {
+  //   max-width: 6em;
+  //   width: 6em;
+  //   height: 100%;
+  //   overflow: auto;
+  //   // border: .0625rem solid black;
+  //   background-color: transparent !important;
+  //   box-shadow: none !important;
+  //   &:hover {
+  //     // max-width: 27.5%;
+  //     // width: 27.5%;
+  //     .h5p-interactive-book-navigation-chapter-button .h5p-interactive-book-navigation-chapter-title-text {
+  //       // display: flex;
+  //     }
+  //   }
+  // }
+}
+
+.h5p-content-hidden {
+  .h5p-interactive-book-cover-present {
+    display: none;
+  }
+}
+
+.h5p-fullscreen,
+.h5p-semi-fullscreen {
+  .h5p-interactive-book {
+    display: flex;
+    flex-direction: column;
+
+    &.edge-18 .h5p-interactive-book-status {
+      padding-right: 9em;
+    }
+
+    .h5p-interactive-book-content {
+      padding-bottom: 4.5em;
+    }
+
+    // .h5p-interactive-book-status-footer {
+    //   position: absolute;
+    //   bottom: 0;
+    //   width: 100%;
+    //   left: 0;
+    // }
+  }
+
+  .h5p-interactive-book-main {
+    flex: 1;
+    overflow: auto;
+
+    .h5p-interactive-book-content {
+      overflow-x: hidden;
+      overflow-y: auto;
+      // Note: Subtracts padding, do not use box-sizing because then inner div
+      // will have too little space
+      // min-height: calc(100% - 5.5em);
+    }
+  }
+
+  .h5p-interactive-book-navigation {
+    display: flex;
+    flex-direction: column;
+
+    .navigation-list {
+      font-family: "Open Sans";
+      flex: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .large-navigation-list {
+      min-height: .0625rem;
+    }
+  }
+}
+
+// Container that wraps both the triggering element and the tooltip
+// Uses relative positioning to serve as a positioning context for the absolute tooltip
+.tooltip-container {
+  font-size: 16px;
+  font-weight: 400;
+  position: relative;
+  display: inline-block;
+
+  // Show tooltip when container is hovered
+  &:hover .tooltip-popup {
+    display: block;
+    opacity: 1;
+  }
+}
+
+// Main tooltip styles
+.tooltip-popup {
+  font-family: "Open Sans", sans-serif;
+  position: absolute;
+  pointer-events: none;
+  display: inline-block;
+  width: max-content;
+  line-height: 150%;
+  letter-spacing: 0px;
+  
+  // Typography and colors
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  
+  // Visual styling
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 99;
+
+  // Animation
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  // Base arrow styles - creates triangle using CSS borders
+  &::after {
+    content: '';
+    position: absolute;
+    border-width: 10px;
+    border-style: solid;
+  }
+
+  // Right arrow - points left (tooltip appears on right side)
+  &.tooltip-right::after {
+    top: 50%;
+    left: 100%;
+    margin-top: -10px;
+    border-color: transparent transparent transparent black;
+  }
+
+  // Left arrow - points right (tooltip appears on left side)
+  &.tooltip-left::after {
+    top: 50%;
+    right: 100%;
+    margin-top: -10px;
+    border-color: transparent black transparent transparent;
+  }
+
+  // Top arrow - points down (tooltip appears above)
+  &.tooltip-top::after {
+    top: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-color: black transparent transparent transparent;
+  }
+
+  // Bottom arrow - points up (tooltip appears below)
+  &.tooltip-bottom::after {
+    bottom: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-color: transparent transparent black transparent;
+  }
+}
+
+video::-webkit-media-controls-fullscreen-button {display: block !important;}
+
+@media(max-width: 768px) {
+  .h5p-interactive-book-cover-toc{
+    display: block !important;
+    // background: red !important;
+  }
+  // .h5p-interactive-book-cover-toc {
+  //   top: 1.875rem !important;
+  // }
+  .toc-left-panel{
+    width: auto !important;
+    // margin-right: 3.125rem;
+    margin: .75rem !important;
+  }
+  .hide-menu{
+    display: none;
+  }
+  .show-menu{
+    display: block !important;
+  }
+  .toc-right-panel {
+    display: none;
+    position: relative;
+    top: 13.125rem !important;
+    width: auto !important;
+  }
+
+  .h5p-interactive-book-navigation-chapter-button .h5p-interactive-book-navigation-chapter-title-text {
+    display: flex !important;
+  }
+  
+  .h5p-interactive-book-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  // Mobile navigation slide animation
+  .h5p-interactive-book-navigation {
+    transition: transform 0.25s linear; // Linear transition for consistent slide speed
+    transform: translateX(-100%); // Hidden by default (off-screen to the left)
+    
+    .navigation-list {
+      width: 100% !important;
+      position: static !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      } 
+  }
+
+  // .h5p-interactive-book-status-footer {
+  //     display: none; // hide the footer in the mobile view
+  // }
+  
+  // Mobile navigation open state - slide in from left
+  .h5p-interactive-book-navigation-open .h5p-interactive-book-navigation {
+    padding: 1.625rem .8125rem;
+    transform: translateX(0); // Slide in to visible position
+  }
+
+  // Mobile navigation hidden state - slide out to left
+  .h5p-interactive-book-navigation-hidden .h5p-interactive-book-navigation {
+    padding: 0;
+    transform: translateX(-100%); // Slide out to the left (off-screen)
+  }
+
+  .h5p-interactive-book-page-name {
+    display: none;
+  }
+  
+  }
+  
+@import 'pagecontent';
+@import 'statusbar';
+@import 'navigationbar';
+@import 'cover';
+@import "summary";
+@import "foc";
+@import "recall-accordion";

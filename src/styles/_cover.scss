@@ -1,0 +1,926 @@
+.h5p-interactive-book-cover {
+  background-repeat: no-repeat;
+  background-size: 110%;
+  min-height: 730px;
+  height: 100vh;
+  overflow: auto;
+  font-family: "Soho Gothic Pro";
+  /* Add the following styles to enable scrolling */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+
+  /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, and Opera */
+  }
+}
+
+.zoomin {
+  transform: scale(1.1) !important;
+}
+
+.zoomout {
+  transform: scale(1) !important;
+  transition: all 1s ease;
+}
+
+.cover-hidden {
+  display: none;
+}
+
+.h5p-interactive-book-cover-banner {
+  visibility: visible;
+  // height: 31.875rem; // need to set dynamic height as causing issues for larger screens
+  height: clamp(31.875rem, 35.52vw, 77.5rem);
+  font-family: Arial;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  transition: height 0.5s ease, visibility 0.5s ease;
+
+  &.h5p-cover-nographics {
+    padding-top: 7.5rem;
+  }
+
+  &.hidden {
+    visibility: hidden;
+    height: 0;
+    transition: height 0.5s ease, visibility 0.5s ease;
+  }
+
+
+
+  p {
+    margin: 0 0 .5em;
+  }
+
+  .cross_Lesson_pages_viewer_left {
+    width: clamp(1.875rem, 2.77vw, 6.07rem);
+    height: clamp(5rem, 6.52vw, 14.26rem);
+    transition: background-color 0.3s;
+    background-color: #18112C;
+    background-position: left center;
+    box-shadow: 0rem .25rem .25rem 0rem rgb(0 0 0 / 25%);
+    border-radius: 0 1.375rem 1.375rem 0;
+    // background-image: url(./../assets/previousArrow.svg);
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0 !important;
+    top: clamp(17.1875rem, 19.08vw, 41.75rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #FFFFFF !important;
+    font-size: clamp(2.125rem, 2.36111vw, 5.25347rem);
+
+    &:hover {
+      background-color: #FFFFFF;
+      color: #18112C !important;
+    }
+  }
+
+  .cross_Lesson_pages_viewer_right {
+    border-radius: 1.375rem 0 0 1.375rem;
+    // background-image: url(./../assets/nextArrow.svg);
+    background-repeat: no-repeat;
+    background-color: #18112C;
+    background-position: left center;
+    box-shadow: 0rem .25rem .25rem 0rem rgb(0 0 0 / 25%);
+    width: clamp(1.875rem, 2.77vw, 6.07rem);
+    height: clamp(5rem, 6.52vw, 14.26rem);
+    transition: background-color 0.3s;
+    position: absolute;
+    right: 0 !important;
+    top: clamp(17.1875rem, 19.08vw, 41.75rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #FFFFFF !important;
+    font-size: clamp(2.125rem, 2.36111vw, 5.25347rem);
+
+    &:hover {
+      background-color: #FFFFFF;
+      color: #18112C !important;
+    }
+  }
+}
+
+.h5p-interactive-book-cover-graphics {
+  align-items: center;
+  display: flex;
+  height: 15em;
+  justify-content: center;
+  margin: 4.375em 0;
+  position: relative;
+  width: 100%;
+  visibility: hidden;
+
+  &.h5p-image>img,
+  &.h5p-video>video,
+  &.h5p-video.h5p-youtube>div:not(.h5p-interactive-book-cover-bar),
+  &.h5p-video.h5p-echo>div:not(.h5p-interactive-book-cover-bar) {
+    box-shadow: 0.5em 0.25em 3em 0 $black-20;
+    position: absolute;
+    left: 50%;
+    max-height: 15em;
+    min-width: 20em;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &.h5p-image>img,
+  &.h5p-video>video,
+  &.h5p-video.h5p-echo>div:not(.h5p-interactive-book-cover-bar) {
+    max-width: 85%;
+  }
+
+  &.h5p-video.h5p-youtube>div:not(.h5p-interactive-book-cover-bar) {
+    max-width: 26.666em;
+  }
+}
+
+.h5p-interactive-book-cover-bar {
+  background-color: var(--color-base-5, $base-color-5);
+  background-size: cover;
+  height: 70%;
+  width: inherit;
+}
+
+/* .h5p-interactive-book-cover-image {
+  box-shadow: .625rem .25rem 2.9375rem 0 $black-20;
+  height: 100%;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+} */
+
+.h5p-interactive-book-cover-title {
+  font-size: clamp(1.9169rem, 3.33333vw, 7.41667rem);
+  line-height: 1.2em;
+  background-color: #18112C;
+  color: #00FF9F;
+  padding: .9375rem 1.875rem;
+  border-radius: 3.125rem;
+  font-family: 'ITCAvantGardeGothicBook', Arial, sans-serif;
+  font-weight: 900;
+  width: fit-content;
+}
+
+.h5p-interactive-book-cover-tagline {
+  background: #00FF9F;
+  margin: 3% 0 5%;
+  padding: 1.625rem 1.5625rem 1.1875rem 1.5625rem;
+  font-size: clamp(1.6373rem, 2.84722vw, 6.33507rem);
+  font-weight: 300;
+  border-radius: 3.125rem;
+  line-height: 1.2em;
+  width: fit-content;
+
+  // text-decoration: none solid $medium-grey;
+  p {
+    margin: 0;
+  }
+
+}
+
+.h5p-interactive-book-cover-start-button {
+  margin-top: .5em;
+  position: fixed;
+  right: 5%;
+  bottom: 5%;
+
+ 
+
+  button {
+    display: flex;
+    justify-content: center;
+    background-color: #00ff9f;
+    background-size: cover;
+    border: 0;
+    border-radius: .7707rem;
+    color: #000;
+    cursor: pointer;
+    font-family: "Mark OT Medium";
+    font-size: 2.8425rem;
+    font-weight: 800;
+    // padding: .625rem 1.5625rem;
+    padding-top: 8px;
+    padding-right: 20px;
+    padding-bottom: 14px;
+    padding-left: 35px;
+    text-align: center;
+    text-decoration: none solid var(--color-text, $background-color);
+
+    &:hover {
+      // background-color: var(--color-base-90, $base-color-90);
+      background-size: cover;
+      cursor: pointer;
+    }
+
+    &:active {
+      // background-color: var(--color-base-95, $base-color-95);
+      background-size: cover;
+    }
+
+    &:focus {
+      outline-style: double;
+    }
+  }
+  .btn_text {
+    line-height: 100%;
+    align-self: center;
+    align-content: center;
+    text-align: start;
+  }
+  .btn_icon{
+    align-content: center;
+  }
+}
+
+.h5p-container {
+  &.covered {
+    .h5p-content-controls {
+      display: none;
+    }
+  }
+}
+
+.h5p-interactive-book-cover-title-container {
+  display: inline-block;
+  margin: 10.5% 4.5% 2% 4.5%;
+  z-index: 1;
+}
+
+.h5p-interactive-book-cover-header {
+  background-color: black;
+  // height: clamp(2.56rem, 4.86vw, 10.63rem);
+  color: white;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 4;
+  background-repeat: no-repeat;
+
+  .h5p-interactive-book-cover-header-left-content {
+    display: flex;
+    flex: auto;
+    // height: inherit;
+    // margin-left: 1.25rem;
+  }
+
+  h1 {
+    padding: 1.25rem;
+  }
+
+  .h5p-interactive-book-header-cover-title {
+    display: flex;
+    flex: auto;
+    justify-content: flex-end;
+    align-items: center;
+    padding-left: 0.5rem;
+    padding-right: 1.875rem;
+    gap: 0.25rem;
+    // margin-right: 3.125rem;
+    
+    span{
+      font-size: clamp(0.8688rem, 2.01389vw, 4.4809rem);
+      font-family: 'Soho Gothic Pro';
+      font-weight: 500;
+      // line-height: 1.2rem;
+    }
+    // .separator {
+    //   margin: 0 .3125rem;
+    // }
+
+    &.hidden {
+      display: none;
+    }
+
+    &.visible {
+      display: block;
+    }
+  }
+}
+
+.hide-cover-banner {
+  transition: opacity 200ms, display 200ms;
+  display: none;
+  opacity: 0;
+}
+
+.h5p-interactive-book-cover-background-image {
+  position: absolute;
+  top: 4rem;
+  width: 100%;
+  height: auto;
+  transform: scale(1.1);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 27%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 27%);
+
+  &.blur{
+    opacity: 0.05;
+  }
+}
+
+.h5p-interactive-book-cover-toc {
+  background-color: transparent;
+  z-index: 3;
+  position: relative;
+
+  &.toc-view {
+    top: 7.5rem;
+  }
+
+  h1 {
+    padding: 1.25rem;
+  }
+
+  .toc-left-panel {
+    height: 100%;
+    flex-grow: 1;
+    background-color: #FFFFFF;
+    box-shadow: .625rem .625rem 6.25rem 0rem rgba(0, 0, 0, 0.25);
+    margin-left: 3.125rem;
+    border-radius: .75rem;
+    position: sticky;
+    font-family: "Open Sans";
+    font-size: 1.11vw;
+
+    .item-list {
+      max-height: 75vh;
+      overflow: auto;
+
+      .item-list-header {
+        font-weight: bold;
+        cursor: pointer;
+        border-bottom: .0625rem solid #e1e3e5;
+        display: flex;
+        // padding: 1.25rem 0.75rem;
+
+        .number-and-icon-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .index-placeholder {
+          display: flex;
+          font-size: clamp(0.86rem, 1.03vw, 2.28rem);
+          font-weight: 800;
+          align-items: center;
+          white-space: nowrap;
+        }
+
+        .icon-placeholder {
+          display: flex;
+          width: clamp(1.5rem, 1.66vw, 3.64rem);
+          height: clamp(1.5rem, 1.66vw, 3.64rem);
+          align-self: anchor-center;
+          padding: 0.2rem;
+          margin-left : .8125rem;
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center;
+          align-items: center;
+       }
+
+        &:hover {
+          background-color: #DBDBDB;
+          color: #151515;
+        }
+
+        &.active {
+          background-color: #151515;
+          color: #FFFFFF;
+        }
+
+        .item-title {
+          text-transform: uppercase;
+          font-weight: bold;
+          font-size: clamp(0.79rem, 0.95vw, 2.10rem);
+          align-self: anchor-center;
+          // margin-left: 2.5rem;
+          // padding: .6875rem 0;
+        }
+      }
+
+      .item {
+        &:not(:last-child) {
+          border-bottom: .0625rem solid #e1e3e5;
+        }
+
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        // line-height: 1.7;
+        // padding: 1.25rem 0.75rem;
+
+        &:hover {
+          background-color: #DBDBDB;
+          color: #151515;
+        }
+
+        &.active {
+          background-color: #151515;
+          color: #FFFFFF;
+        }
+
+        &.expanded {
+          height: auto !important;
+        }
+
+        .item-wrapper {
+          display: flex;
+
+          .number-and-icon-wrapper {
+            display: flex;
+          }
+
+          .index-placeholder {
+            display: flex;
+            font-size: clamp(0.86rem, 1.03vw, 2.28rem);
+            font-weight: 700;
+            align-items: center;
+            white-space: nowrap;
+          }
+
+          .icon-placeholder {
+            display: flex;
+            width: clamp(1.5rem, 1.66vw, 3.64rem);
+            height: clamp(2.81rem, 3.12vw, 6.82rem);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            margin-left : .8125rem;
+            align-self: anchor-center;
+            padding: 0.2rem;
+            align-items: center;
+          }
+
+          .text-placeholder {
+            justify-content: space-evenly;
+            // margin-left: 2.5rem;
+            // margin-right: 0.5rem;
+
+            .item-title {
+              text-transform: uppercase;
+              font-weight: 700;
+              font-size: clamp(0.79rem, 0.95vw, 2.10rem);
+            }
+
+            .item-description {
+              font-size: clamp(0.77rem, 0.92vw, 2.02rem);
+              font-weight: 400;
+            }
+            
+            .toc-description {
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1; // single line clamp for all
+              line-clamp: 1;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              max-width: 100%;
+              min-width: 0;
+              cursor: pointer;
+
+              &.expanded {
+                -webkit-line-clamp: unset;
+                line-clamp: unset;
+                display: block; // allow full text when expanded (mobile toggle)
+                white-space: normal;
+              }
+            }
+          }
+
+          .toc-des-icon-toggle-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            flex: 1;
+
+            .toggle-description {
+              cursor: pointer;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              width: 1.5rem;
+              height: 1.5rem;
+              font-size: clamp(0.79rem, 0.95vw, 2.10rem);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .toc-right-panel {
+    flex-grow: 3;
+    margin-left: 1.25rem;
+    margin-right: 1.875rem;
+    border-radius: .75rem;
+    // border: .1875rem solid red;
+  }
+}
+
+
+.h5p-interactive-book-cover-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0d004d;
+  // background-image: url(./../assets/pearsonLogo.svg);
+  // background-repeat: no-repeat;
+  // background-position: center;
+  // margin-right: 1.25rem;
+  // height: 2.8125rem;
+  // padding: .625rem 1.5625rem;
+}
+
+.h5p-interactive-book-cover-title-logo {
+  // background-image: url(./../assets/asimov.svg);
+  width: clamp(7.5rem, 14.57vw, 31.88rem); 
+  // height: clamp(3.12rem, 4.51vw, 9.86rem);
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+  margin-left: 1rem;
+}
+
+.thumbnail-overlay-container {
+  margin-bottom: 1.5625rem;
+}
+
+.thumbnail-overlay {
+  background-color: #D9D9D9;
+  padding: 1.5%;
+  margin-bottom: .9375rem;
+  border-radius: .8125rem;
+  font-size: clamp(1.43rem, 1.58vw, 3.49rem);
+  cursor: pointer;
+  margin: .125rem .625rem;
+  transition: margin 0.5s ease;
+
+  .activity {
+    margin-left: .9375rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .exercise {
+    font-weight: 400;
+  }
+
+  &:hover {
+    // padding: .3125rem;
+    background-color: white;
+    margin: 0;
+    transition: margin 0.5s ease;
+  }
+
+
+
+}
+.thumbnail-img-wrapper {
+  border-radius: .75rem;
+  margin-top: 1.5%;
+  background-color: white;
+
+  img {
+    border-radius: .3789rem;
+    scroll-margin-top: 8.5625rem;
+  }
+}
+
+.right-panel-thumbnail-header {
+  border-radius: .75rem .75rem 0 0;
+  // background-color: #9E1BC3;
+  background-color: black;
+  color: white;
+  padding: .9375rem;
+  font-size: 1rem;
+}
+
+.thumbnail-overlay-header{
+  display: flex;
+  gap: 4px;
+  font-family: "Mark OT Medium";
+  .separator {
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+  }
+  .thumbnail-header {
+    margin-bottom: 0;
+  }
+}
+
+.h5p-interactive-book-cover-back-to-top {
+  background-color: #151515;
+  border-radius: .3807rem;
+  color: #FFF;
+  font-family: "Open Sans";
+  font-size: clamp(0.98rem, 1.08vw, 2.38rem);
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  cursor: pointer;
+  // padding: .2538rem 1.269rem .4375rem 1.269rem;
+  height: clamp(2.56rem, 2.84vw, 6.22rem);
+  width: clamp(8.87rem, 9.85vw, 21.55rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // padding: .625rem 1.25rem;
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 5;
+
+  // width: 7.5rem;
+  .back-to-top-text {
+    margin-left: .625rem;
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  &:hover {
+    background-color: #FFF;
+    color: #151515;
+  }
+}
+
+.teaching-notes-icon {
+  z-index: 1;
+  width: clamp(2.18rem, 3.33vw, 7.2rem);
+  height: clamp(2.18rem, 3.33vw, 7.2rem);
+  flex-shrink: 0;
+  border-radius: 3rem;
+  background-color: #151515;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: clamp(3.43rem, 6.73vw, 14.72rem);
+  top: clamp(3rem, 6.73vw, 14.72rem);
+  cursor: pointer;
+
+  &:hover {
+    background-color: #FFFFFF;
+    color: #151515;
+  }
+}
+
+.foc-tooltip-container{
+  position: absolute;
+  z-index: 5;
+  width: clamp(2.18rem, 3.33vw, 7.2rem);
+  height: clamp(2.18rem, 3.33vw, 7.2rem);
+  right: clamp(5.43rem, 10.73vw, 18.72rem);
+  top: clamp(3rem, 6.73vw, 14.72rem);
+  cursor: pointer;
+
+  // Hide FOC button on screens smaller than 1024px (mobile, tablet, small desktop)
+  @media (max-width: 1024px) {
+    display: none;
+  }
+}
+
+.front-of-class-icon {
+  width: clamp(2.18rem, 3.33vw, 7.2rem);
+  height: clamp(2.18rem, 3.33vw, 7.2rem);
+  flex-shrink: 0;
+  border-radius: 3rem;
+  background-color: #151515;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: #FFFFFF;
+    color: #151515;
+    border: 1px solid #151515;
+  }
+}
+
+
+.teaching-notes-modal {
+  width: 55%;
+  flex-shrink: 0;
+  border-radius: 1.0894rem;
+  border: .0625rem solid #919191;
+  background: #FFF;
+  z-index: 1;
+  position: absolute;
+  top: clamp(3.25rem, 6.25vw, 13.75rem);
+  right: clamp(2.375rem, 5.25vw, 11.5rem);
+  overflow: auto;
+
+  .teaching-notes-modal-close {
+    display: flex;
+    width: clamp(2.18rem, 3.33vw, 7.2rem);
+    height: clamp(2.18rem, 3.33vw, 7.2rem);
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    position: absolute;
+    right: 1.1875rem;
+    top: .7294rem;
+    border-radius: 3rem;
+    background-color: #151515;
+    color: #FFFFFF;
+  }
+
+  .modal-body {
+    margin: 2%;
+    margin-right: 4.6875rem;
+    text-align: justify;
+    max-height: 75vh;
+    overflow: auto;
+    scrollbar-width: thin;
+    h3 {
+      font-size: clamp(1.17rem, 1.3vw, 2.84rem);
+    }
+    p, li {
+      font-size: clamp(1rem, 1.11vw, 2.69rem);
+    } 
+  }
+}
+
+.toc-description-tooltip {
+  position: absolute;
+  visibility: hidden;
+  background-color: #575757;
+  color: #FFFFFF;
+  border-radius: 8px;
+
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s;
+
+  font-family: 'Avenir', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: left;
+
+  width: fit-content;
+  max-width: 25rem;
+  overflow-wrap: break-word
+}
+
+@media (max-width: 768px) {
+  .h5p-interactive-book-cover-background-image {
+    width: 100vw;
+    height: 70vh;
+    object-fit: cover;
+    position: absolute;
+    top: 2.5625rem;
+  }
+  .h5p-interactive-book-cover-title-logo {
+    margin-left: 0;
+  }
+  .h5p-interactive-book-cover-banner {
+    height:auto;
+    .h5p-interactive-book-cover-title-container {
+      margin: 15.375rem 2.1875rem 1.5625rem 2.1875rem;
+    }
+    .h5p-interactive-book-cover-start-button {
+      right: 0;
+      width: 100%;
+      button {
+        width: 96%;
+        border-radius: .6263rem;
+        font-size: 2.3101rem;
+        margin: 0 2%;
+      }
+    }
+  }
+  
+  .toc-left-panel {
+    .item-list {
+      .item {
+        &:hover {
+          background-color: #DBDBDB;
+          color: #151515;
+        }
+
+        &:active {
+          background-color: #151515;
+          color: #FFFFFF;
+        }
+      }
+      .index-placeholder {
+        font-weight: 700 !important;
+      }
+    }
+  }
+
+  .teaching-notes-icon {
+    right: 0.5rem !important;
+    
+  }
+
+  .teaching-notes-modal {
+    width: 100% !important;
+    right: 0 !important;
+    top: 2.625rem !important;
+    border-radius: 0 ;
+    .teaching-notes-modal-close {
+      position: absolute;
+      top: .5rem;
+      right: .5rem;
+    }
+    .modal-body {
+      //margin: 1.25rem .625rem;
+      padding: 0 .625rem;
+      // p,li {
+      //   font-size: .875rem;
+      // }
+    }
+  }
+
+  .h5p-interactive-book-cover-title {
+    font-size: 1.6971rem;
+    padding: .6364rem 1.0607rem .3536rem 1.0607rem;
+  }
+
+  .h5p-interactive-book-cover-tagline {
+    font-size: 1.1667rem;
+    padding: .9193rem .8839rem .6717rem .8839rem;
+  }
+
+  .h5p-interactive-book-cover-header {
+    //height: 2.5625rem;
+    .h5p-interactive-book-cover-header-left-content{
+      // margin-left: .5rem;
+      /* .h5p-interactive-book-cover-logo{
+        width: 1.4406rem;
+        height: 1.5406rem;
+        background-size: cover;
+        position: relative;
+        top: .3125rem;
+        margin-right: .3125rem !important;
+      } */
+    }
+    .h5p-interactive-book-header-cover-title{
+      margin-right: .8125rem;
+      text-align: right;
+      padding: 0;
+      span{
+        font-size: .8142rem;
+        font-family: 'Soho Gothic Pro';
+        font-style: normal;
+        font-weight: 500;
+        font-size: .8142rem;
+        line-height: 0.875rem;
+      }
+    }
+  }
+
+  
+
+  .h5p-interactive-book-cover {
+    background-size: cover;
+    background-position: top;
+
+    &.zoomout {
+      background-size: cover;
+      /* Smooth transition */
+    }
+  }
+}
+@media (min-width: 1680px) {
+  .toc-left-panel {
+    .item-list {
+      .item {
+        .item-description {
+          margin-top: .4em;
+        }
+      }
+    }
+  }
+}
+@media (min-width: 2560px) {
+  .toc-left-panel {
+    .item-list {
+      .item {
+        .item-description {
+          margin-top: .8em;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "title": "Interactive Book - Pearson",
+  "description": "An interactive book which displays content in pages and sections",
+  "majorVersion": 1,
+  "minorVersion": 0,
+  "patchVersion": 3,
+  "runnable": 1,
+  "fullscreen": 1,
+  "author": "Joubel",
+  "accessibilityStandard": "WCAG 2.2",
+  "accessibilityLevel": "AA",
+  "templateLastUpdate": "04/24/2026",
+  "license": "MIT",
+  "machineName": "H5P.Pears_InteractiveBook",
+  "embedTypes": [
+    "iframe"
+  ],
+  "preloadedJs": [
+    {
+      "path": "dist/h5p-interactive-book.js"
+    }
+  ],
+  "preloadedCss": [
+    {
+      "path": "dist/h5p-interactive-book.css"
+    }
+  ],
+  "preloadedDependencies": [
+    {
+      "machineName": "H5P.Pears_ColumnTest",
+      "majorVersion": 1,
+      "minorVersion": 0
+    }
+  ]
+}

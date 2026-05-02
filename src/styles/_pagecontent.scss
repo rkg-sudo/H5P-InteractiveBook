@@ -1,0 +1,145 @@
+.h5p-interactive-book-chapter {
+  display: none;
+  left: 0;
+  overflow: visible; // chapter does not scroll — .header-section-wrapper handles inner scroll
+  right: 0;
+  top: 0;
+  transform: translateX(0);
+  background-color: white;
+  transition: .25s;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box; // apply box-sizing to avoid the content to overflow because of padding and border
+
+  &.h5p-interactive-book-previous {
+    transform: translateX(-100%);
+  }
+
+  &.h5p-interactive-book-current {
+    display: block;
+    transform: translateX(0);
+    border-radius: .8125rem;
+  }
+
+  &.h5p-interactive-book-next {
+    transform: translateX(100%);
+  }
+
+  // height: auto prevents the content div from stretching to match the parent
+  // when the recall accordion expands it. Previously height: 100% caused the
+  // content div to grow with the parent, creating blank space below the activity.
+  > div:not(.recall-accordion) {
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+  }
+}
+
+.h5p-interactive-book-animate {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: transform .55s ease-in-out;
+}
+
+.h5p-interactive-book-content {
+  position: relative;
+  height: auto;
+  margin-bottom: 1rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: .8125rem;
+  font-family: "Avenir";
+  z-index: 1;
+  flex: 1;
+
+  &.hidden {
+    display: none;
+  }
+
+  .h5p-column-content {
+    // Workaround for Android to prevent font boosting
+    max-height: 9999999px;
+    position: relative;
+    font-family: 'Open Sans';
+    box-sizing: border-box; // apply box-sizing to avoid the content to overflow because of padding and border
+
+    &:first-child {
+      margin-top: 0;
+      z-index: 1;
+
+      &>p {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.h5p-interactive-book-status-progress-marker {
+  align-items: center;
+  border-top: .0625rem solid $cool-grey;
+  display: flex;
+  padding: 1em 0 0 1em;
+  clear: both;
+  cursor: pointer;
+
+  input {
+    &[type='checkbox'] {
+      transform: scale(1.75);
+      cursor: pointer;
+    }
+  }
+
+  p {
+    color: $mud;
+    font-weight: bold;
+    margin: 0;
+    padding-left: 1em;
+  }
+}
+
+.h5p-content-hidden {
+  display: none;
+}
+
+/* Help Course Presentation to resize properly with initial height of max-width / 9 * 16 */
+.h5p-course-presentation {
+  .h5p-wrapper {
+    height: 596px;
+  }
+}
+
+.h5p-interactive-book-content-title {
+  color: #151515;
+  font-size: clamp(1.43rem, 1.597vw, 3.49rem);
+  font-family: "Mark OT";
+  padding: .9375rem;
+  background-color: white;
+
+  .activity {
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .excercise {
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+}
+
+.h5p-interactive-book-content-header {
+  padding: .9375rem;
+  color: white;
+  background-color: black;
+  border-radius: .75rem .75rem 0 0;
+}
+
+// ── Mobile-specific styles ──────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .h5p-interactive-book-chapter.h5p-interactive-book-current {
+    border-radius: 0; // Remove border-radius on mobile
+  }
+}

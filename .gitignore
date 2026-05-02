@@ -1,0 +1,6 @@
+node_modules/
+.github/
+.env
+LANGUAGE_POSTMESSAGE.md
+h5p-standalone-react/
+h5p-standalone-react/node_modules/

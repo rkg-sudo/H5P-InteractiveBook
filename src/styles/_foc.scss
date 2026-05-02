@@ -1,0 +1,625 @@
+/* Add CSS variable for header height at the root level */
+:root {
+  --header-height: 3.85rem; /* Default fallback value */
+}
+
+
+// Hotspot styling
+.hotspot-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none; // Let clicks pass through by default
+  display: block;
+}
+
+
+
+.hotspot-clickable-area {
+  position: absolute;
+  z-index: 999;
+  cursor: pointer;
+  background-color: transparent; // Transparent by default
+  pointer-events: auto; // Ensure the area is clickable
+  border: 2px solid transparent; // Invisible border by default
+  border-radius: 5px;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  
+  &:hover {
+    border-color: #919191; // Show gray border on hover
+    background-color: rgba(145, 145, 145, 0.1); // Very subtle gray background on hover
+  }
+}
+
+// Media queries for better responsive behavior
+@media screen and (max-width: 768px) {
+  .hotspot-clickable-area {
+    border-width: 3px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
+
+// Bootstrap-style modal overrides
+.modal {
+  background-color: rgba(0, 0, 0, 0.6);
+  
+  // Smooth fade-in animation
+  &.fade {
+    transition: opacity 0.3s ease-in-out;
+    
+    &:not(.show) {
+      opacity: 0;
+    }
+    
+    &.show {
+      opacity: 1;
+    }
+    
+    .modal-dialog {
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+      transform: scale(0.9) translateY(-20px);
+      opacity: 0;
+    }
+    
+    &.show .modal-dialog {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .modal-dialog.modal-xl {
+    max-width: 90%;
+    margin: 1.75rem auto;
+  }
+
+  .modal-content {
+    position: relative;
+    border-radius: 0.3rem;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+    .modal-close-btn {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    z-index: 1050;
+    background-color: #2b2a2a;
+    color: #fff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.2s ease;
+    font-size: 18px;
+    font-weight: normal;
+    
+    &:hover {
+      background-color: #444444;
+      color: #ffffff;
+    }
+    
+    &::before {
+      content: "×";
+      font-size: 26px;
+      line-height: 1;
+    }
+  }
+}
+
+  .foc-modal-body {
+    padding: 1rem;
+    // max-height: 80vh;
+    overflow-y: auto;
+  }
+
+
+// Make sure chapter content is displayed in the modal
+.foc-modal-body .h5p-interactive-book-chapter {
+  display: block !important;
+}
+
+.h5p-interactive-book-foc-container {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 80px); /* Leave space for the navigation panel */
+  height: 100%;
+  margin-top: 60px; /* Allow space for the header */
+  overflow-y: auto;
+  background-color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  .h5p-interactive-book-status { /* Display only the main header and hide the book status ad navigation in FOC view a*/
+    // display: none;
+  }
+}
+
+.h5p-interactive-book-foc-nav-panel {
+  position: fixed;
+  top: 60px; /* Allow space for the header */
+  right: 0;
+  width: 80px;
+  height: calc(100% - 60px);
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  box-shadow: -2px 0px 6px rgba(0, 0, 0, 0.1);
+}
+
+.h5p-interactive-book-foc-nav-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  margin-bottom: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.h5p-interactive-book-foc-nav-button:hover {
+  background-color: #eaeaea;
+}
+
+.h5p-interactive-book-foc-nav-button .icon-back {
+  width: 24px;
+  height: 24px;
+  // background-image: url('../assets/icons/back-icon.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.h5p-interactive-book-foc-nav-button .icon-notes {
+  width: 24px;
+  height: 24px;
+  // background-image: url('../assets/icons/notes-icon.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Status bar styling for FOC view */
+.h5p-interactive-book-status-header {
+  // position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+/* FOC header styling */
+.foc-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.foc-main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.foc-nav-buttons {
+  display: flex;
+  margin-right: 20px;
+}
+
+.foc-nav-button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-left: 10px;
+  transition: background-color 0.2s;
+}
+
+.foc-nav-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.foc-container {
+  width: 100%;
+  height: 100%;
+}
+
+.foc-center-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  width: auto;
+  
+  // Add bottom padding only when there is no navigation (single-page FOC).
+  // Multi-page FOC has .foc-navigation-wrapper inside this element, which already
+  // has its own margin, so no extra padding is needed there.
+  &:not(:has(.foc-navigation-wrapper)) {
+    padding-bottom: 1.5rem;
+  }
+}
+
+.foc-image-wrapper {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+}
+
+.h5p-interactive-book-front-of-class-image {
+  // max-width: 100%;
+  // max-height: calc(100vh - var(--header-height, 5vh) - 2vh); /* Ensure image fits in viewport */ // Removed this for fixing the Zoom in and out issue arriving on QA
+  height: auto;
+  // width: auto;
+  display: block;
+  object-fit: contain; /* Maintain aspect ratio */
+}
+
+
+/* Make sure map areas also have pointer cursor */
+area {
+  cursor: pointer;
+}
+
+.foc-content {
+  display: flex;
+  /* Using CSS variable for header height that will be set via JavaScript */
+  margin-top: calc(var(--header-height, 5vh) + 1vh); /* Fallback to 5vh+1vh if variable not set */
+  // transition: margin-top 0.2s ease-out; /* Smooth transition when header height changes */
+  justify-content: space-between; /* Center content horizontally */
+  flex: 1 1 auto;
+  height: auto;
+  /* Allow container to size naturally based on image dimensions - each image takes its own space */
+  position: relative;
+  
+  /* Hide scrollbar but keep scroll functionality - sticky scrollbar at bottom handles visibility */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
+/* Sticky horizontal scrollbar container that appears at bottom of viewport */
+.foc-sticky-scrollbar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  // border-top: 1px solid ;
+  z-index: 1000;
+  overflow-x: auto;
+  overflow-y: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  backdrop-filter: blur(5px);
+  // background-color: #151515; /* Semi-transparent background */
+  
+  /* Custom scrollbar styling with zoom-independent height */
+  &::-webkit-scrollbar {
+    height: 0.6vw;
+    // transform: scaleY(calc(1 / var(--browser-zoom, 1)));
+    transform-origin: bottom;
+    /* Hide scrollbar when zoom is at 100% (devicePixelRatio = 1) */
+    display: var(--scrollbar-display, block);
+  }
+  
+  &::-webkit-scrollbar-track {
+    background-color: #151515;
+    // transform: scaleY(calc(1 / var(--browser-zoom, 1)));
+    transform-origin: bottom;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #888;
+    // transform: scaleY(calc(1 / var(--browser-zoom, 1)));
+    transform-origin: bottom;
+
+    &:hover {
+      background-color: #bbbbbb;
+    }
+  }
+  
+  /* Firefox scrollbar styling */
+  scrollbar-width: auto;
+  // scrollbar-color: rgba(0, 0, 0, 0.3) rgba(240, 240, 240, 0.5);
+}
+
+.foc-sticky-scrollbar-container.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Hidden content div that matches foc-content width to create proper scrollbar */
+.foc-sticky-scrollbar-content {
+  height: 0.1vw;
+  background-color: transparent;
+  pointer-events: none;
+  /* Width will be set dynamically via JavaScript based on content width */
+}
+
+.foc-content-left-pane {
+  display: flex;
+  justify-content: center;
+  flex-grow: 4;
+  align-items: center; /* Center content vertically */
+}
+
+.foc-content-right-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: clamp(2rem, 10vw, 12rem);
+  flex-shrink: 0; /* Never shrink - preserves spacing during zoom */
+  .foc-back-to-cover {
+    z-index: 1;
+    width: clamp(2.18rem, 3.33vw, 7.2rem);
+    height: clamp(2.18rem, 3.33vw, 7.2rem);
+    flex-shrink: 0;
+    border-radius: 3rem;
+    background-color: #151515;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      background-color: #FFFFFF;
+      color: #151515;
+      border: 1px solid #151515;
+    }
+  }
+}
+
+.foc-teaching-notes {
+  z-index: 1;
+  width: clamp(2.18rem, 3.33vw, 7.2rem);
+  height: clamp(2.18rem, 3.33vw, 7.2rem);
+  flex-shrink: 0;
+  border-radius: 3rem;
+  background-color: #151515;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: clamp(3.43rem, 6.73vw, 14.72rem);
+  cursor: pointer;
+  margin-top:15px;
+
+  &:hover {
+    background-color: #FFFFFF;
+    color: #151515;
+  }
+}
+
+/* Scoped FOC modal styles to match cover modal spacing and close button */
+.foc-teaching-notes-modal {
+  width: 55%;
+  flex-shrink: 0;
+  border-radius: 1.0894rem;
+  border: .0625rem solid #919191;
+  background: #FFF;
+  z-index: 2000;
+  position: fixed;
+  box-sizing: border-box;
+  max-width: calc(100% - 40px);
+  overflow: auto;
+
+  .foc-teaching-notes-modal-close {
+    display: flex;
+    width: clamp(2.18rem, 3.33vw, 7.2rem);
+    height: clamp(2.18rem, 3.33vw, 7.2rem);
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    border-radius: 3rem;
+    background-color: #151515;
+    color: #FFFFFF;
+  }
+
+  .modal-body {
+    margin: 2%;
+    margin-right: 5rem;
+    text-align: justify;
+    max-height: 75vh;
+    overflow: auto;
+    scrollbar-width: thin;
+    padding: 0.5rem 0.75rem;
+    h3 {
+      font-size: clamp(1.17rem, 1.3vw, 2.84rem);
+    }
+    p, li {
+      font-size: clamp(1rem, 1.11vw, 2.69rem);
+    }
+  }
+}
+
+/* ========================================
+   MULTI-PAGE FOC NAVIGATION STYLES
+   ======================================== */
+
+/* Loading overlay for page transitions */
+.foc-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .foc-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* 16px → 1rem */
+
+    .foc-spinner {
+      width: 3rem;  /* 48px fallback – JS overrides with generateClampCSS('2.18rem', '3rem') */
+      height: 3rem; /* 48px fallback – JS overrides with generateClampCSS('2.18rem', '3rem') */
+      border: 0.25rem solid #e0e0e0; /* 4px → 0.25rem */
+      border-top: 0.25rem solid #151515; /* 4px → 0.25rem */
+      border-radius: 50%;
+      animation: foc-spin 0.8s linear infinite;
+    }
+
+    .foc-loading-text {
+      color: #151515;
+      font-size: 0.875rem; /* 14px fallback – JS overrides with generateClampCSS('0.875rem', '0.875rem') */
+      font-weight: 500;
+    }
+  }
+}
+
+@keyframes foc-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pagination navigation wrapper */
+.foc-navigation-wrapper {
+  margin: 4% auto;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Pagination navigation container */
+.foc-page-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16.5625rem;  /* 265px fallback – JS overrides with generateClampCSS('12rem', '16.5625rem') */
+  height: 3.125rem;   /* 50px fallback  – JS overrides with generateClampCSS('2.5rem', '3.125rem') */
+  border: 1px solid rgba(0, 0, 0, 0.25);
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+}
+
+/* ========================================
+   PAGINATION STYLES
+   ======================================== */
+
+.foc-pagination {
+  gap: 0.625rem; /* 10px → 0.625rem */
+  background: rgba(0, 0, 0, 0.75);
+  padding: 0.625rem 1.25rem; /* 10px 20px → 0.625rem 1.25rem */
+  border-radius: 6.25rem; /* 100px → 6.25rem */
+
+  .foc-nav-btn {
+    background: rgba(255, 255, 255, 0.03);
+    color: #fff;
+    border: none;
+    width: 1.875rem;     /* 30px fallback – JS overrides with generateClampCSS('1.5rem', '1.875rem') */
+    height: 1.875rem;    /* 30px fallback – JS overrides with generateClampCSS('1.5rem', '1.875rem') */
+    min-width: 1.875rem; /* 30px fallback – JS overrides with generateClampCSS('1.5rem', '1.875rem') */
+    min-height: 1.875rem;/* 30px fallback – JS overrides with generateClampCSS('1.5rem', '1.875rem') */
+    padding: 0;
+    border-radius: 0.3125rem; /* 5px → 0.3125rem */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-sizing: border-box;
+    flex-shrink: 0;
+
+    svg {
+      width: 0.386rem; /* 6.17px → 0.386rem */
+      height: 0.625rem; /* 10px → 0.625rem */
+      fill: currentColor;
+      pointer-events: none;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: #2a2a2a;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+
+  .foc-pages-container {
+    display: flex;
+    align-items: center;
+    gap: 0.313rem;
+  }
+
+  .foc-page-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #ffffff;
+    width: 1.5625rem;  /* 25px fallback – JS overrides with generateClampCSS('1.25rem', '1.5625rem') */
+    height: 1.5625rem; /* 25px fallback – JS overrides with generateClampCSS('1.25rem', '1.5625rem') */
+    border-radius: 3.125rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-sizing: border-box;
+
+    &:hover:not(.active) {
+      background-color: rgba(0, 0, 0, 0.75);
+      border-color: #555;
+    }
+
+    &.active {
+      background: #fff;
+      border: 1px solid #fff;
+      color: rgba(0, 0, 0, 0.75);
+      cursor: default;
+    }
+  }
+}

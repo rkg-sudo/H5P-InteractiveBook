@@ -1,0 +1,7 @@
+import "../styles/main.scss";
+import "../styles/style.scss";
+import InteractiveBook from "../scripts/app";
+
+// Load library
+H5P = H5P || {};
+H5P.Pears_InteractiveBook = InteractiveBook;

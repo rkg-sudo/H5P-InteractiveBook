@@ -1,0 +1,59 @@
+// Hotspot-specific additional styles for better visual indication
+// This file is for additional hotspot styling that complements _foc.scss
+
+// Hide all hotspot labels completely
+.hotspot-label {
+  display: none !important;
+}
+
+// Simple hotspot styling with border only on hover
+.hotspot-clickable-area {
+  position: absolute;
+  z-index: 999;
+  cursor: pointer;
+  background-color: transparent; // Transparent background
+  pointer-events: auto; // Ensure the area is clickable
+  border: none; // No border by default
+  transition: all 0.2s ease-in-out;
+  
+  // Only show border on hover
+  &:hover {
+    border: 2px solid #919191; // Gray border
+    border-radius: 10px;
+  }
+}
+
+// Ensure hotspots are always clickable
+#foc-hotspot-container {
+  pointer-events: none; // Let events pass through the container
+  
+  & > * {
+    pointer-events: auto; // But allow events on children
+  }
+}
+
+// Minimal styling for small screens
+@media screen and (max-width: 768px) {
+  .hotspot-clickable-area {
+    &:hover {
+      border-width: 3px; // Slightly thicker border on small screens
+    }
+    
+    // Make the clickable area a bit bigger on small screens
+    min-width: 30px;
+    min-height: 30px;
+  }
+}
+
+// For improved responsiveness on small screens
+@media screen and (max-width: 768px) {
+  .hotspot-clickable-area {
+    min-width: 40px; // Ensure minimum size on small screens
+    min-height: 40px; // Ensure minimum size on small screens
+    
+    // Slightly thicker border on small screens for better visibility
+    &:hover {
+      border-width: 3px;
+    }
+  }
+}
