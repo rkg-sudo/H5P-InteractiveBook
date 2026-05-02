@@ -38,10 +38,12 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.11.2",
     "color": "^4.2.3",
     "element-scroll-polyfill": "^1.0.1",
     "jquery-circle-progress": "^1.2.2",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react-dom": "^19.2.5",
+    "react-redux": "^9.2.0"
   }
 }

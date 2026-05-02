@@ -2,11 +2,15 @@ import URLTools from "./urltools";
 import SideBar from "./sidebar";
 import SimpleViewSideBar from "./simpleviewsidebar";
 import StatusBar from "./statusbar";
-// import Cover from "./cover";
-import Cover from "./coverReact";
+import Cover from "./cover";
+// import Cover from "./coverReact";
 import PageContent from "./pagecontent";
 import FrontOfClassContent from "./foc";
 import "element-scroll-polyfill";
+
+// Redux Integration
+import { store } from "../store/store";
+import { markActivityCompleted } from "../store/slices/appSlice";
 import Colors from "./colors";
 import { wonderTheme, sparkTheme, asimovnewTOC, theme1, theme2, theme3 } from "./themes";
 import {
@@ -1687,6 +1691,9 @@ export default class InteractiveBook extends H5P.EventDispatcher {
               completed: true                           // Explicitly mark as completed
             };
 
+            // Dispatch to Redux Store
+            store.dispatch(markActivityCompleted({ id: sectionUUID, data: scoreData }));
+
             const chapterId = self.getChapterId(chapterResult?.instance?.subContentId);
 
             // Check if this was the last activity in the book.
@@ -1876,7 +1883,7 @@ export default class InteractiveBook extends H5P.EventDispatcher {
       }
 
       // Initialize React wrapper demo
-      ReactWrapper.render($wrapper[0], this.contentId, this.contentData, this.config);
+      // ReactWrapper.render($wrapper[0], this.contentId, this.contentData, this.config);
 
       this.setWrapperClassFromRatio(this.mainWrapper);
 

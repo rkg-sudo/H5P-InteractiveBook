@@ -1,5 +1,6 @@
-import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 import CoverComponent from '../components/CoverReact';
 
 /**
@@ -21,16 +22,18 @@ export default class Cover extends H5P.EventDispatcher {
 
   renderReact(params, titleText, startText, contentId, parent) {
     this.root.render(
-      <CoverComponent 
-        params={params} 
-        titleText={titleText} 
-        startText={startText} 
-        contentId={contentId} 
-        parent={parent}
-        onRead={() => {
-          this.trigger('read');
-        }}
-      />
+      <Provider store={store}>
+        <CoverComponent 
+          params={params} 
+          titleText={titleText} 
+          startText={startText} 
+          contentId={contentId} 
+          parent={parent}
+          onRead={() => {
+            this.trigger('read');
+          }}
+        />
+      </Provider>
     );
   }
 

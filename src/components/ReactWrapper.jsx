@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 
 const ReactApp = ({ contentId, contentData, config }) => {
   useEffect(() => {
@@ -37,11 +39,13 @@ export default class ReactWrapper {
     // Initialize React Root and render
     const root = createRoot(reactMountPoint);
     root.render(
-      <ReactApp 
-        contentId={contentId} 
-        contentData={contentData} 
-        config={config} 
-      />
+      <Provider store={store}>
+        <ReactApp 
+          contentId={contentId} 
+          contentData={contentData} 
+          config={config} 
+        />
+      </Provider>
     );
 
     return root;
