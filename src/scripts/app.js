@@ -28,6 +28,7 @@ import { loadDynamicFonts } from "./utils/fontLoader";
 import { getAllFOCHotspots, isFOCPreviewEnabled } from "./foc-multipage";
 import { logger } from "./utils/logger";
 import ReactWrapper from "../components/ReactWrapper";
+// XapiListener is rendered inside ReactWrapper — no direct import needed here
 
 export default class InteractiveBook extends H5P.EventDispatcher {
 
@@ -1691,8 +1692,9 @@ export default class InteractiveBook extends H5P.EventDispatcher {
               completed: true                           // Explicitly mark as completed
             };
 
-            // Dispatch to Redux Store
+            // ✅ Dispatch to Redux Store — RecallContainer reacts to this automatically
             store.dispatch(markActivityCompleted({ id: sectionUUID, data: scoreData }));
+            console.log("✅ Redux dispatched markActivityCompleted for:", sectionUUID);
 
             const chapterId = self.getChapterId(chapterResult?.instance?.subContentId);
 
@@ -1705,36 +1707,36 @@ export default class InteractiveBook extends H5P.EventDispatcher {
             // When this activity completes, unblock the NEXT chapter:
             // - Remove the blocking overlay (if present)
             // - Build and inject the recall accordion in its place
-            const completedChapterIdx = self.chapters.indexOf(chapterResult);
-            const nextPageChapter = self.pageContent?.chapters?.[completedChapterIdx + 1];
-            if (nextPageChapter) {
-              if (nextPageChapter.recallAccordionInstance) {
-                // Accordion already exists — enable it and refresh the rendered
-                // content so any updated answers from the activity page are shown.
-                nextPageChapter.recallAccordionInstance.enable();
-                nextPageChapter.recallAccordionInstance.refresh();
-              }
-              else if (nextPageChapter.recallBlockOverlay) {
-                // ✅ NEW CODE: Parent is now wrapper
-                // Overlay is showing — remove it and create the accordion.
-                const overlay = nextPageChapter.recallBlockOverlay;
-                const wrapper = overlay.parentElement; // Parent is now the wrapper, not columnNode
-                if (wrapper) {
-                  wrapper.removeChild(overlay);
+            // const completedChapterIdx = self.chapters.indexOf(chapterResult);
+            // const nextPageChapter = self.pageContent?.chapters?.[completedChapterIdx + 1];
+            // if (nextPageChapter) {
+            //   if (nextPageChapter.recallAccordionInstance) {
+            //     // Accordion already exists — enable it and refresh the rendered
+            //     // content so any updated answers from the activity page are shown.
+            //     nextPageChapter.recallAccordionInstance.enable();
+            //     nextPageChapter.recallAccordionInstance.refresh();
+            //   }
+            //   else if (nextPageChapter.recallBlockOverlay) {
+            //     // ✅ NEW CODE: Parent is now wrapper
+            //     // Overlay is showing — remove it and create the accordion.
+            //     const overlay = nextPageChapter.recallBlockOverlay;
+            //     const wrapper = overlay.parentElement; // Parent is now the wrapper, not columnNode
+            //     if (wrapper) {
+            //       wrapper.removeChild(overlay);
                   
-                  // Re-enable interaction with chapter content
-                  const columnNode = self.pageContent?.columnNodes?.[completedChapterIdx + 1];
-                  if (columnNode) {
-                    columnNode.style.pointerEvents = '';
-                    columnNode.style.userSelect = '';
-                  }
-                }
-                nextPageChapter.recallBlockOverlay = null;
-                // Delegate accordion creation to PageContent so it reuses the
-                // same renderRecallActivity logic.
-                self.pageContent?.buildRecallAccordionForChapter(completedChapterIdx + 1);
-              }
-            }
+            //       // Re-enable interaction with chapter content
+            //       const columnNode = self.pageContent?.columnNodes?.[completedChapterIdx + 1];
+            //       if (columnNode) {
+            //         columnNode.style.pointerEvents = '';
+            //         columnNode.style.userSelect = '';
+            //       }
+            //     }
+            //     nextPageChapter.recallBlockOverlay = null;
+            //     // Delegate accordion creation to PageContent so it reuses the
+            //     // same renderRecallActivity logic.
+            //     self.pageContent?.buildRecallAccordionForChapter(completedChapterIdx + 1);
+            //   }
+            // }
 
             // (Replaced by direct call above — no event bus needed)
             // self.trigger('recallActivityCompleted', { activityId: sectionUUID });
@@ -1882,8 +1884,8 @@ export default class InteractiveBook extends H5P.EventDispatcher {
         $wrapper.addClass("edge-18");
       }
 
-      // Initialize React wrapper demo
-      // ReactWrapper.render($wrapper[0], this.contentId, this.contentData, this.config);
+      // Initialize React wrapper
+      ReactWrapper.render($wrapper[0], this.contentId, this.contentData, this.config, this);
 
       this.setWrapperClassFromRatio(this.mainWrapper);
 

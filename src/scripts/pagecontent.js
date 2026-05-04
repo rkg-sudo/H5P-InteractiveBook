@@ -5,6 +5,7 @@ import { tocIcons } from './icons';
 import { getPageContentTOCData } from './utils/getTOCData';
 import { GenerateExerciseDiv } from './utils/generalFunction';
 import RecallAccordion from '../components/recall/RecallAccordion';
+import ReactWrapper from '../components/ReactWrapper';
 
 class PageContent extends H5P.EventDispatcher {
   /**
@@ -758,46 +759,68 @@ class PageContent extends H5P.EventDispatcher {
       // accordion so the user can review their answers.
       // If NOT completed → show a blocking overlay that prevents work on this
       // chapter and offers a "Go to Activity" button to navigate back.
-      let recallAccordionEl = null;
-      let recallBlockOverlayEl = null;
+      // let recallAccordionEl = null;
+      // let recallBlockOverlayEl = null;
+      
+      // ✅ React Container
+      let reactContainerEl = null;
+
       if (chapter.recallActivityConfig) {
         const { linkedActivityId, linkedActivityTitle } = chapter.recallActivityConfig;
 
-        // Already completed? (e.g. restored from previous state)
-        const isAlreadyCompleted =
-          this.parent?.childActivityResults?.[linkedActivityId]?.completed === true;
+        reactContainerEl = document.createElement('div');
+        reactContainerEl.classList.add('recall-react-root');
 
-        if (isAlreadyCompleted) {
-          // ── Accordion (completed path) ──────────────────────────────────
-          const accordion = RecallAccordion({
-            linkedActivityId,
-            linkedActivityTitle: linkedActivityTitle || linkedActivityId,
-            isInitiallyEnabled: true,
-            themeData: this.themeData,
-            l10n: this.l10n,
-            isMobile: this.isMobileView,
-            parent: this.parent,
-            onExpand: (contentArea) => {
-              const prevChapter = this.chapters[chapterIndex - 1];
-              this.renderRecallActivity(contentArea, prevChapter);
-            },
-          });
-          chapter.recallAccordionInstance = accordion;
-          recallAccordionEl = accordion.getElement();
-          
-          // ✅ FIX: Ensure interaction is enabled when recall is completed
-          columnNode.style.pointerEvents = '';
-          columnNode.style.userSelect = '';
-        }
-        else {
-          // ── Blocking overlay (incomplete path) ─────────────────────────
-          recallBlockOverlayEl = this.createRecallBlockOverlay(
-            linkedActivityId,
-            linkedActivityTitle || linkedActivityId,
-            chapterIndex
-          );
-          chapter.recallBlockOverlay = recallBlockOverlayEl;
-        }
+        const prevChapter = this.chapters[chapterIndex - 1];
+        
+        // Use ReactWrapper to render the RecallContainer
+        ReactWrapper.renderRecallContainer(reactContainerEl, {
+          linkedActivityId,
+          linkedActivityTitle: linkedActivityTitle || linkedActivityId,
+          themeData: this.themeData,
+          l10n: this.l10n,
+          isMobile: this.isMobileView,
+          parent: this.parent,
+          prevChapter: prevChapter,
+          chapterIndex: chapterIndex,
+          columnNode: columnNode
+        });
+
+        // Already completed? (e.g. restored from previous state)
+        // const isAlreadyCompleted =
+        //   this.parent?.childActivityResults?.[linkedActivityId]?.completed === true;
+
+        // if (isAlreadyCompleted) {
+        //   // ── Accordion (completed path) ──────────────────────────────────
+        //   const accordion = RecallAccordion({
+        //     linkedActivityId,
+        //     linkedActivityTitle: linkedActivityTitle || linkedActivityId,
+        //     isInitiallyEnabled: true,
+        //     themeData: this.themeData,
+        //     l10n: this.l10n,
+        //     isMobile: this.isMobileView,
+        //     parent: this.parent,
+        //     onExpand: (contentArea) => {
+        //       const prevChapter = this.chapters[chapterIndex - 1];
+        //       this.renderRecallActivity(contentArea, prevChapter);
+        //     },
+        //   });
+        //   chapter.recallAccordionInstance = accordion;
+        //   recallAccordionEl = accordion.getElement();
+        //   
+        //   // ✅ FIX: Ensure interaction is enabled when recall is completed
+        //   columnNode.style.pointerEvents = '';
+        //   columnNode.style.userSelect = '';
+        // }
+        // else {
+        //   // ── Blocking overlay (incomplete path) ─────────────────────────
+        //   recallBlockOverlayEl = this.createRecallBlockOverlay(
+        //     linkedActivityId,
+        //     linkedActivityTitle || linkedActivityId,
+        //     chapterIndex
+        //   );
+        //   chapter.recallBlockOverlay = recallBlockOverlayEl;
+        // }
       }
       // ─────────────────────────────────────────────────────────────────────
 
@@ -807,7 +830,7 @@ class PageContent extends H5P.EventDispatcher {
 
       // ✅ NEW STRUCTURE: Create wrapper ONLY if this chapter has a recall activity
       // Wrapper contains: [recall element, chapter content, overlay]
-      if (recallAccordionEl || recallBlockOverlayEl) {
+      if (reactContainerEl) {
         // ✅ FIX: Check if columnNode is already in DOM BEFORE creating wrapper structure
         const parent = columnNode.parentNode;
         
@@ -816,10 +839,8 @@ class PageContent extends H5P.EventDispatcher {
         wrapper.classList.add('h5p-interactive-book-chapter-wrapper');
         wrapper.style.position = 'relative'; // Always set position relative for absolute children
         
-        // Add recall element as FIRST child of wrapper
-        if (recallAccordionEl) {
-          wrapper.appendChild(recallAccordionEl);
-        }
+        // Add react container as FIRST child of wrapper
+        wrapper.appendChild(reactContainerEl);
         
         // ✅ CRITICAL: If columnNode is already in DOM, replace it FIRST, then append to wrapper
         if (parent) {
@@ -834,14 +855,14 @@ class PageContent extends H5P.EventDispatcher {
         }
         
         // If blocking overlay exists, add it LAST so it overlays everything
-        if (recallBlockOverlayEl) {
-          // Disable interaction with chapter content when overlay is present
-          columnNode.style.pointerEvents = 'none';
-          columnNode.style.userSelect = 'none';
-          
-          // Add overlay as last child (will be positioned absolutely over everything)
-          wrapper.appendChild(recallBlockOverlayEl);
-        }
+        // if (recallBlockOverlayEl) {
+        //   // Disable interaction with chapter content when overlay is present
+        //   columnNode.style.pointerEvents = 'none';
+        //   columnNode.style.userSelect = 'none';
+        //   
+        //   // Add overlay as last child (will be positioned absolutely over everything)
+        //   wrapper.appendChild(recallBlockOverlayEl);
+        // }
         
         // Store wrapper reference
         chapter.chapterWrapper = wrapper;
@@ -1276,13 +1297,21 @@ class PageContent extends H5P.EventDispatcher {
         // Format: "Activity 1 - Reading" or "Exercise 2 - Writing"
         const formattedTitle = `${exerciseType}${prevActivityNumber} - ${prevSkillProperCase}`;
         
-        // 🔥 FIX: Use instance.subContentId (the sectionUUID used in xAPI completion tracking)
-        // The xAPI event handler in app.js stores completion using sectionUUID (instance.subContentId).
-        // This MUST match to correctly check if the previous activity is completed.
-        const prevActivityId = prevChapter.sections[0].instance.subContentId; // ← This is the sectionUUID
+        // 🔥 FIX: Use section.content.id — this is the SAME ID the xAPI handler
+        // in app.js uses when it calls findChapterByContentId() and then
+        // store.dispatch(markActivityCompleted({ id: sectionUUID })).
+        // Previously we used instance.subContentId which is a DIFFERENT value,
+        // causing the Redux lookup in RecallContainer to never match.
+        const prevActivityId = prevChapter.sections[0].content.id; // ← Must match xAPI sectionUUID
+        console.log("🔍 recallActivityConfig:", {
+          linkedActivityId: prevActivityId,
+          instanceSubContentId: prevChapter.sections[0].instance.subContentId,
+          contentId: prevChapter.sections[0].content.id,
+          areSame: prevActivityId === prevChapter.sections[0].instance.subContentId
+        });
 
         chapter.recallActivityConfig = {
-          linkedActivityId: prevActivityId, // Use instance.subContentId (sectionUUID)
+          linkedActivityId: prevActivityId, // Use content.id (matches xAPI sectionUUID)
           linkedActivityTitle: formattedTitle,
         };
       }
