@@ -257,251 +257,251 @@ export default class InteractiveBook extends H5P.EventDispatcher {
       loadDynamicFonts(this.params.themeData.fontFace);
     }
 
-    // this.params.foc = [
-    //   {
-    //     "focTitle": "Q1",
-    //     "focType": "hotspot",
-    //     "focId": 1,
-    //     "defaultFoc": 1,
-    //     "focHotspots": [
-    //       {
-    //         "shape": "rect",
-    //         "index": 1,
-    //         "coords": [
-    //           13.864168618266978,
-    //           153.10370099344684,
-    //           153.10370099344684,
-    //           13.864168618266978
-    //         ],
-    //         "tooltip": "Hotspot 1 description",
-    //         "id": "3890deef-b8da-401c-b091-ec0c62f4d502",
-    //         "linkActivity": {
-    //           "itemId": "a1105e4d"
-    //         }
-    //       },
-    //       {
-    //         "shape": "rect",
-    //         "index": 1,
-    //         "coords": [
-    //           611.1857844467335,
-    //           209.89726238895335,
-    //           762.9495016559556,
-    //           12.401196709110444
-    //         ],
-    //         "tooltip": "Hotspot 2 description",
-    //         "id": "4c31dc4c-787d-438c-8ee1-b5de5881dcf1",
-    //         "linkActivity": {
-    //           "itemId": "a1105e4e"
-    //         }
-    //       }
-    //     ],
-    //     "focData": {
-    //       "params": {
-    //         "id": "2bdf7fef-369a-4ac1-81ab-e04bdcf26553",
-    //         "type": "image",
-    //         "alt": "",
-    //         "path": "https://pace-stg.pearson.com/sequoia/use1/cite-media-stg/2bdf7fef-369a-4ac1-81ab-e04bdcf26553/Gen_AI_GeneratedImage_9240ec63-dc0f-48fc-b688-14f7e4a8a25e_1.png",
-    //         "height": 864,
-    //         "width": 1184,
-    //         "size": "1.6 MB",
-    //         "alfresco": {
-    //           "siteId": "elm-h5p-contents",
-    //           "nodeRef": "d6a1ad2a-8f65-48ea-a5e6-bd3cf7fa2499"
-    //         },
-    //         "imagePreview": false
-    //       },
-    //       "metadata": {
-    //         "contentType": "Image",
-    //         "title": "FOC Page"
-    //       },
-    //       "library": "H5P.Image 1.1",
-    //       "subContentId": "023f6faf-3062-4f7b-9f65-79e914891842"
-    //     },
-    //     "focPreview": false
-    //   },
-    //   {
-    //     "focTitle": "Q2",
-    //     "focType": "hotspot",
-    //     "focId": 2,
-    //     "defaultFoc": 1,
-    //     "focHotspots": [
-    //       {
-    //         "shape": "rect",
-    //         "index": 2,
-    //         "coords": [
-    //           828.5472980982761,
-    //           874.7303630641953,
-    //           1074.2406443950194,
-    //           629.0370167674513
-    //         ],
-    //         "tooltip": "Hotspot 1 description",
-    //         "id": "b0994586-b676-48a5-a672-5d8601090d6c",
-    //         "linkActivity": {
-    //           "itemId": "a1105d9c"
-    //         }
-    //       }
-    //     ],
-    //     "focData": {
-    //       "params": {
-    //         "id": "1312b589-9004-4da4-8307-fe442bf3cf59",
-    //         "type": "image",
-    //         "alt": "",
-    //         "path": "https://pace-stg.pearson.com/sequoia/use1/cite-media-stg/1312b589-9004-4da4-8307-fe442bf3cf59/sunset_ocean.png",
-    //         "height": 896,
-    //         "width": 1280,
-    //         "size": "1012 KB",
-    //         "alfresco": {
-    //           "siteId": "elm-h5p-contents",
-    //           "nodeRef": "d6a1ad2a-8f65-48ea-a5e6-bd3cf7fa2499"
-    //         },
-    //         "imagePreview": false
-    //       },
-    //       "metadata": {
-    //         "contentType": "Image",
-    //         "title": "FOC Page"
-    //       },
-    //       "library": "H5P.Image 1.1",
-    //       "subContentId": "f1efc0cb-5d37-4fe8-83c3-24ee2bf6b6dc"
-    //     },
-    //     "focPreview": false
-    //   },
-    //   {
-    //     "focTitle": "Q3",
-    //     "focType": "hotspot",
-    //     "focId": 3,
-    //     "defaultFoc": 1,
-    //     "focHotspots": [
-    //       {
-    //         "shape": "rect",
-    //         "index": 3,
-    //         "coords": [
-    //           828.5472980982761,
-    //           874.7303630641953,
-    //           1074.2406443950194,
-    //           629.0370167674513
-    //         ],
-    //         "tooltip": "Hotspot 1 description",
-    //         "id": "b0994586-b676-48a5-a672-5d8601090d6c",
-    //         "linkActivity": {
-    //           "itemId": "a1105d9c"
-    //         }
-    //       }
-    //     ],
-    //     "focData": {
-    //       "params": {
-    //         "id": "3f35ed0c-ccb2-48c7-b4c9-b37d0207d744",
-    //         "type": "image",
-    //         "alt": "",
-    //         "path": "https://pace-stg.pearson.com/sequoia/use1/cite-media-stg/3f35ed0c-ccb2-48c7-b4c9-b37d0207d744/Kids.png",
-    //         "height": 708,
-    //         "width": 758,
-    //         "size": "653 KB",
-    //         "alfresco": {
-    //           "siteId": "elm-h5p-contents",
-    //           "nodeRef": "d6a1ad2a-8f65-48ea-a5e6-bd3cf7fa2499"
-    //         },
-    //         "imagePreview": false
-    //       },
-    //       "metadata": {
-    //         "contentType": "Image",
-    //         "title": "FOC Page"
-    //       },
-    //       "library": "H5P.Image 1.1",
-    //       "subContentId": "cbc385c9-c094-4a47-adbb-b04db2c8b923"
-    //     },
-    //     "focPreview": false
-    //   },
-    //   {
-    //     "focTitle": "Q4",
-    //     "focType": "hotspot",
-    //     "focId": 4,
-    //     "defaultFoc": 1,
-    //     "focHotspots": [],
-    //     "focData": {
-    //       "params": {
-    //         "id": "2af434fb-7c32-463f-a84f-52f629903152",
-    //         "type": "image",
-    //         "alt": "",
-    //         "path": "https://pace-stg.pearson.com/sequoia/use1/cite-media-stg/2af434fb-7c32-463f-a84f-52f629903152/Gen_AI_GeneratedImage_91ee873a-f417-4038-b950-e0453e3bf50d_3.png",
-    //         "height": 896,
-    //         "width": 1280,
-    //         "size": "908 KB",
-    //         "alfresco": {
-    //           "siteId": "elm-h5p-contents",
-    //           "nodeRef": "d6a1ad2a-8f65-48ea-a5e6-bd3cf7fa2499"
-    //         },
-    //         "imagePreview": false
-    //       },
-    //       "metadata": {
-    //         "contentType": "Image",
-    //         "title": "FOC Page"
-    //       },
-    //       "library": "H5P.Image 1.1",
-    //       "subContentId": "948f6847-64a8-4c82-9b34-94ec1a20082b"
-    //     },
-    //     "focPreview": false
-    //   },
-    //   {
-    //     "focTitle": "Q5",
-    //     "focType": "hotspot",
-    //     "focId": 5,
-    //     "defaultFoc": 1,
-    //     "focHotspots": [],
-    //     "focData": {
-    //       "params": {
-    //         "id": "b6feb739-4913-443f-8da3-686f78b1973f",
-    //         "type": "image",
-    //         "alt": "",
-    //         "path": "https://pace-stg.pearson.com/sequoia/use1/cite-media-stg/b6feb739-4913-443f-8da3-686f78b1973f/9780137635818_marketingimage%20%2812%29.jpg",
-    //         "height": 662,
-    //         "width": 500,
-    //         "size": "203 KB",
-    //         "alfresco": {
-    //           "siteId": "elm-h5p-contents",
-    //           "nodeRef": "d6a1ad2a-8f65-48ea-a5e6-bd3cf7fa2499"
-    //         },
-    //         "imagePreview": false
-    //       },
-    //       "metadata": {
-    //         "contentType": "Image",
-    //         "title": "FOC Page"
-    //       },
-    //       "library": "H5P.Image 1.1",
-    //       "subContentId": "dd73e984-bfaf-4d7e-9b35-d43650524796"
-    //     },
-    //     "focPreview": false
-    //   },
-    //   {
-    //     "focTitle": "Q6",
-    //     "focType": "hotspot",
-    //     "focId": 6,
-    //     "defaultFoc": 1,
-    //     "focHotspots": [],
-    //     "focData": {
-    //       "params": {
-    //         "id": "626a5c33-bf67-4570-8c87-45a689705dca",
-    //         "type": "image",
-    //         "alt": "",
-    //         "path": "https://pace-stg.pearson.com/sequoia/use1/cite-media-stg/626a5c33-bf67-4570-8c87-45a689705dca/m15app02.jpg",
-    //         "height": 323,
-    //         "width": 503,
-    //         "size": "13 KB",
-    //         "alfresco": {
-    //           "siteId": "elm-h5p-contents",
-    //           "nodeRef": "d6a1ad2a-8f65-48ea-a5e6-bd3cf7fa2499"
-    //         },
-    //         "imagePreview": false
-    //       },
-    //       "metadata": {
-    //         "contentType": "Image",
-    //         "title": "FOC Page"
-    //       },
-    //       "library": "H5P.Image 1.1",
-    //       "subContentId": "49b0f7de-520f-427c-a91c-6e48725f5740"
-    //     },
-    //     "focPreview": false
-    //   }
-    // ];
+    this.params.foc = [
+      {
+        "focTitle": "Q1",
+        "focType": "hotspot",
+        "focId": 1,
+        "defaultFoc": 1,
+        "focHotspots": [
+          {
+            "shape": "rect",
+            "index": 1,
+            "coords": [
+              13.864168618266978,
+              153.10370099344684,
+              153.10370099344684,
+              13.864168618266978
+            ],
+            "tooltip": "Hotspot 1 description",
+            "id": "3890deef-b8da-401c-b091-ec0c62f4d502",
+            "linkActivity": {
+              "itemId": "a1105e4d"
+            }
+          },
+          {
+            "shape": "rect",
+            "index": 1,
+            "coords": [
+              611.1857844467335,
+              209.89726238895335,
+              762.9495016559556,
+              12.401196709110444
+            ],
+            "tooltip": "Hotspot 2 description",
+            "id": "4c31dc4c-787d-438c-8ee1-b5de5881dcf1",
+            "linkActivity": {
+              "itemId": "a1105e4e"
+            }
+          }
+        ],
+        "focData": {
+          "params": {
+            "id": "2bdf7fef-369a-4ac1-81ab-e04bdcf26553",
+            "type": "image",
+            "alt": "",
+            "path": "https://pace-stg.pearson.com/sequoia/use1/cite-media-stg/2bdf7fef-369a-4ac1-81ab-e04bdcf26553/Gen_AI_GeneratedImage_9240ec63-dc0f-48fc-b688-14f7e4a8a25e_1.png",
+            "height": 864,
+            "width": 1184,
+            "size": "1.6 MB",
+            "alfresco": {
+              "siteId": "elm-h5p-contents",
+              "nodeRef": "d6a1ad2a-8f65-48ea-a5e6-bd3cf7fa2499"
+            },
+            "imagePreview": false
+          },
+          "metadata": {
+            "contentType": "Image",
+            "title": "FOC Page"
+          },
+          "library": "H5P.Image 1.1",
+          "subContentId": "023f6faf-3062-4f7b-9f65-79e914891842"
+        },
+        "focPreview": false
+      },
+      {
+        "focTitle": "Q2",
+        "focType": "hotspot",
+        "focId": 2,
+        "defaultFoc": 1,
+        "focHotspots": [
+          {
+            "shape": "rect",
+            "index": 2,
+            "coords": [
+              828.5472980982761,
+              874.7303630641953,
+              1074.2406443950194,
+              629.0370167674513
+            ],
+            "tooltip": "Hotspot 1 description",
+            "id": "b0994586-b676-48a5-a672-5d8601090d6c",
+            "linkActivity": {
+              "itemId": "a1105d9c"
+            }
+          }
+        ],
+        "focData": {
+          "params": {
+            "id": "1312b589-9004-4da4-8307-fe442bf3cf59",
+            "type": "image",
+            "alt": "",
+            "path": "https://pace-stg.pearson.com/sequoia/use1/cite-media-stg/1312b589-9004-4da4-8307-fe442bf3cf59/sunset_ocean.png",
+            "height": 896,
+            "width": 1280,
+            "size": "1012 KB",
+            "alfresco": {
+              "siteId": "elm-h5p-contents",
+              "nodeRef": "d6a1ad2a-8f65-48ea-a5e6-bd3cf7fa2499"
+            },
+            "imagePreview": false
+          },
+          "metadata": {
+            "contentType": "Image",
+            "title": "FOC Page"
+          },
+          "library": "H5P.Image 1.1",
+          "subContentId": "f1efc0cb-5d37-4fe8-83c3-24ee2bf6b6dc"
+        },
+        "focPreview": false
+      },
+      {
+        "focTitle": "Q3",
+        "focType": "hotspot",
+        "focId": 3,
+        "defaultFoc": 1,
+        "focHotspots": [
+          {
+            "shape": "rect",
+            "index": 3,
+            "coords": [
+              828.5472980982761,
+              874.7303630641953,
+              1074.2406443950194,
+              629.0370167674513
+            ],
+            "tooltip": "Hotspot 1 description",
+            "id": "b0994586-b676-48a5-a672-5d8601090d6c",
+            "linkActivity": {
+              "itemId": "a1105d9c"
+            }
+          }
+        ],
+        "focData": {
+          "params": {
+            "id": "3f35ed0c-ccb2-48c7-b4c9-b37d0207d744",
+            "type": "image",
+            "alt": "",
+            "path": "https://pace-stg.pearson.com/sequoia/use1/cite-media-stg/3f35ed0c-ccb2-48c7-b4c9-b37d0207d744/Kids.png",
+            "height": 708,
+            "width": 758,
+            "size": "653 KB",
+            "alfresco": {
+              "siteId": "elm-h5p-contents",
+              "nodeRef": "d6a1ad2a-8f65-48ea-a5e6-bd3cf7fa2499"
+            },
+            "imagePreview": false
+          },
+          "metadata": {
+            "contentType": "Image",
+            "title": "FOC Page"
+          },
+          "library": "H5P.Image 1.1",
+          "subContentId": "cbc385c9-c094-4a47-adbb-b04db2c8b923"
+        },
+        "focPreview": false
+      },
+      {
+        "focTitle": "Q4",
+        "focType": "hotspot",
+        "focId": 4,
+        "defaultFoc": 1,
+        "focHotspots": [],
+        "focData": {
+          "params": {
+            "id": "2af434fb-7c32-463f-a84f-52f629903152",
+            "type": "image",
+            "alt": "",
+            "path": "https://pace-stg.pearson.com/sequoia/use1/cite-media-stg/2af434fb-7c32-463f-a84f-52f629903152/Gen_AI_GeneratedImage_91ee873a-f417-4038-b950-e0453e3bf50d_3.png",
+            "height": 896,
+            "width": 1280,
+            "size": "908 KB",
+            "alfresco": {
+              "siteId": "elm-h5p-contents",
+              "nodeRef": "d6a1ad2a-8f65-48ea-a5e6-bd3cf7fa2499"
+            },
+            "imagePreview": false
+          },
+          "metadata": {
+            "contentType": "Image",
+            "title": "FOC Page"
+          },
+          "library": "H5P.Image 1.1",
+          "subContentId": "948f6847-64a8-4c82-9b34-94ec1a20082b"
+        },
+        "focPreview": false
+      },
+      {
+        "focTitle": "Q5",
+        "focType": "hotspot",
+        "focId": 5,
+        "defaultFoc": 1,
+        "focHotspots": [],
+        "focData": {
+          "params": {
+            "id": "b6feb739-4913-443f-8da3-686f78b1973f",
+            "type": "image",
+            "alt": "",
+            "path": "https://pace-stg.pearson.com/sequoia/use1/cite-media-stg/b6feb739-4913-443f-8da3-686f78b1973f/9780137635818_marketingimage%20%2812%29.jpg",
+            "height": 662,
+            "width": 500,
+            "size": "203 KB",
+            "alfresco": {
+              "siteId": "elm-h5p-contents",
+              "nodeRef": "d6a1ad2a-8f65-48ea-a5e6-bd3cf7fa2499"
+            },
+            "imagePreview": false
+          },
+          "metadata": {
+            "contentType": "Image",
+            "title": "FOC Page"
+          },
+          "library": "H5P.Image 1.1",
+          "subContentId": "dd73e984-bfaf-4d7e-9b35-d43650524796"
+        },
+        "focPreview": false
+      },
+      {
+        "focTitle": "Q6",
+        "focType": "hotspot",
+        "focId": 6,
+        "defaultFoc": 1,
+        "focHotspots": [],
+        "focData": {
+          "params": {
+            "id": "626a5c33-bf67-4570-8c87-45a689705dca",
+            "type": "image",
+            "alt": "",
+            "path": "https://pace-stg.pearson.com/sequoia/use1/cite-media-stg/626a5c33-bf67-4570-8c87-45a689705dca/m15app02.jpg",
+            "height": 323,
+            "width": 503,
+            "size": "13 KB",
+            "alfresco": {
+              "siteId": "elm-h5p-contents",
+              "nodeRef": "d6a1ad2a-8f65-48ea-a5e6-bd3cf7fa2499"
+            },
+            "imagePreview": false
+          },
+          "metadata": {
+            "contentType": "Image",
+            "title": "FOC Page"
+          },
+          "library": "H5P.Image 1.1",
+          "subContentId": "49b0f7de-520f-427c-a91c-6e48725f5740"
+        },
+        "focPreview": false
+      }
+    ];
     
     const nodeEnv = process.env.NODE_ENV || "production";
     if (nodeEnv === "development") {
@@ -532,11 +532,11 @@ export default class InteractiveBook extends H5P.EventDispatcher {
     // Get all FOC hotspots (works for both array and object formats)
     const allFocHotspots = getAllFOCHotspots(this.params?.foc);
     
-    this.params.isClassroomPreviewEnabled =
-      (this.role === "teacher" || isPrimaryOrPreprimaryStudent || (this.role === "student" && isAdultOrSecondarySegment)) &&
-      allFocHotspots.length > 0 &&
-      allFocHotspots.some((hotspot) => "linkActivity" in hotspot);
-    // this.params.isClassroomPreviewEnabled = true;
+    // this.params.isClassroomPreviewEnabled =
+    //   (this.role === "teacher" || isPrimaryOrPreprimaryStudent || (this.role === "student" && isAdultOrSecondarySegment)) &&
+    //   allFocHotspots.length > 0 &&
+    //   allFocHotspots.some((hotspot) => "linkActivity" in hotspot);
+    this.params.isClassroomPreviewEnabled = true;
 
     this.params.viewType = this.params.foc_view ? "foc" : "default";
 

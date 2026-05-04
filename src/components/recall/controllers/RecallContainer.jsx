@@ -23,15 +23,9 @@ const RecallContainer = ({
 }) => {
   // Model: Select completion state from Redux
   const completedActivities = useSelector(state => state.app?.completedActivities);
-  const isCompleted = completedActivities?.[linkedActivityId]?.completed || false;
-
-  // 🔍 DEBUG: Log to verify ID matching
-  console.log("🔍 RecallContainer DEBUG:", {
-    linkedActivityId,
-    isCompleted,
-    allCompletedKeys: Object.keys(completedActivities || {}),
-    completedActivities
-  });
+  const activityState = completedActivities?.[linkedActivityId];
+  const isCompleted = activityState?.completed || false;
+  const completionVersion = activityState?.version || 0;
 
   // Manage columnNode pointer events based on completion state
   useEffect(() => {
@@ -57,6 +51,7 @@ const RecallContainer = ({
         isMobile={isMobile}
         parent={parent}
         prevChapter={prevChapter}
+        completionVersion={completionVersion}
       />
     );
   }

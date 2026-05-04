@@ -36,7 +36,8 @@ const RecallAccordionReact = ({
   l10n,
   isMobile,
   parent,
-  prevChapter
+  prevChapter,
+  completionVersion = 0
 }) => {
   const [isExpanded, setIsExpanded] = useState(!isMobile);
   const [isViewMore, setIsViewMore] = useState(false);
@@ -44,8 +45,18 @@ const RecallAccordionReact = ({
   const [isEyeHovered, setIsEyeHovered] = useState(false);
   const contentAreaRef = useRef(null);
   const contentPopulatedRef = useRef(false);
+  const lastVersionRef = useRef(completionVersion);
 
   const MAX_PANEL_HEIGHT = isMobile ? null : 600;
+
+  // When completionVersion changes (activity re-completed with new answers),
+  // reset the content cache so the next render cycle re-populates fresh data.
+  useEffect(() => {
+    if (completionVersion > lastVersionRef.current) {
+      lastVersionRef.current = completionVersion;
+      contentPopulatedRef.current = false; // Force re-render of recalled content
+    }
+  }, [completionVersion]);
 
   // Render the recall activity into the content area using the vanilla JS method
   useEffect(() => {
@@ -54,8 +65,10 @@ const RecallAccordionReact = ({
       parent.pageContent.renderRecallActivity(contentAreaRef.current, prevChapter);
       contentPopulatedRef.current = true;
       parent?.trigger('resize');
+      // Re-check overflow after content is injected
+      setTimeout(() => checkOverflow(), 200);
     }
-  }, [isExpanded, prevChapter, parent]);
+  }, [isExpanded, prevChapter, parent, completionVersion]);
 
   const checkOverflow = useCallback(() => {
     if (!MAX_PANEL_HEIGHT || !contentAreaRef.current) {
@@ -74,6 +87,16 @@ const RecallAccordionReact = ({
       const timer = setTimeout(checkOverflow, 100);
       return () => clearTimeout(timer);
     }
+  }, [isExpanded, checkOverflow]);
+
+  // Re-check overflow when container is moved (e.g., into FOC modal)
+  useEffect(() => {
+    if (!contentAreaRef.current || !isExpanded) return;
+    const observer = new ResizeObserver(() => {
+      checkOverflow();
+    });
+    observer.observe(contentAreaRef.current);
+    return () => observer.disconnect();
   }, [isExpanded, checkOverflow]);
 
   const toggleExpand = () => {

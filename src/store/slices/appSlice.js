@@ -22,10 +22,14 @@ export const appSlice = createSlice({
     },
     markActivityCompleted: (state, action) => {
       const { id, data } = action.payload;
+      const prev = state.completedActivities[id];
       state.completedActivities[id] = {
-        ...state.completedActivities[id],
+        ...prev,
         ...data,
         completed: true,
+        // Increment version on every completion — allows UI to detect
+        // re-submissions and refresh recalled content.
+        version: (prev?.version || 0) + 1,
       };
     }
   },

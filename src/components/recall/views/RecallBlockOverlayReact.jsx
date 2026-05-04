@@ -45,6 +45,28 @@ const RecallBlockOverlayReact = ({
   const handleGoToActivity = () => {
     const prevChapterIndex = chapterIndex - 1;
     if (prevChapterIndex >= 0 && parent?.chapters?.[prevChapterIndex]) {
+      // If inside a FOC modal, close it first — the hidden.bs.modal handler
+      // will restore the borrowed DOM node before we navigate.
+      const focModal = document.querySelector('.modal.show');
+      if (focModal) {
+        // Import Bootstrap Modal to properly close it
+        const bsModal = window.bootstrap?.Modal?.getInstance(focModal);
+        if (bsModal) {
+          // Navigate after modal is fully hidden
+          focModal.addEventListener('hidden.bs.modal', () => {
+            const targetInstance = parent.chapters[prevChapterIndex].instance;
+            parent.trigger('newChapter', {
+              h5pbookid: parent.contentId,
+              chapter: `h5p-interactive-book-chapter-${targetInstance.subContentId}`,
+              section: 'top',
+            });
+          }, { once: true });
+          bsModal.hide();
+          return;
+        }
+      }
+
+      // Not inside a modal — navigate directly (activity page context)
       const targetInstance = parent.chapters[prevChapterIndex].instance;
       parent.trigger('newChapter', {
         h5pbookid: parent.contentId,

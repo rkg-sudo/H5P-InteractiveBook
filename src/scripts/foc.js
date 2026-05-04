@@ -42,6 +42,31 @@ function addFOCModalStyles() {
       .foc-modal-body .h5p-interactive-book-chapter {
           display: block !important;
       }
+      /* Force chapter wrapper visible inside FOC modal (normally hidden
+         until :has(.h5p-interactive-book-current) matches, which doesn't
+         apply inside the modal context). */
+      .foc-modal-body .h5p-interactive-book-chapter-wrapper {
+          display: flex !important;
+          flex-direction: column;
+          position: relative;
+          min-height: 100%;
+      }
+      .foc-modal-body .recall-react-root {
+          display: block !important;
+      }
+      /* Ensure the recall accordion and its overflow work inside modal */
+      .foc-modal-body .recall-accordion {
+          overflow: visible;
+      }
+      .foc-modal-body .recall-accordion__content-wrapper {
+          overflow: visible;
+      }
+      /* Ensure the blocking overlay covers the entire modal content area */
+      .foc-modal-body .recall-block-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 10;
+      }
   `;
   document.head.appendChild(styleElement);
 }
@@ -1641,17 +1666,31 @@ class FrontOfClassContent extends H5P.EventDispatcher {
       pageContent.initializeChapter(tocIndex);
     }
 
+    // Determine what to move: prefer the chapter wrapper (includes recall root),
+    // fall back to the raw column node if no wrapper exists.
+    const chapterWrapper = pageChapter.chapterWrapper || null;
+    const nodeToMove = chapterWrapper || pageColumnNode;
+
+    console.log("🔍 renderColumnsInModal DEBUG:", {
+      tocIndex,
+      isInitialized: pageChapter.isInitialized,
+      hasWrapper: !!chapterWrapper,
+      hasRecallConfig: !!pageChapter.recallActivityConfig,
+      nodeToMove: nodeToMove.className,
+      childCount: pageColumnNode.childNodes.length,
+    });
+
     // Remember original DOM position for restore on modal close.
     this._activeModalChapter = {
-      columnNode: pageColumnNode,
-      originalParent: pageColumnNode.parentNode,
-      nextSibling: pageColumnNode.nextSibling,
+      columnNode: nodeToMove,
+      originalParent: nodeToMove.parentNode,
+      nextSibling: nodeToMove.nextSibling,
       tocIndex,
     };
 
     // Move the live node into the modal.
     // CSS in .foc-modal-body already forces display:block on .h5p-interactive-book-chapter.
-    modalBody.appendChild(pageColumnNode);
+    modalBody.appendChild(nodeToMove);
 
     // Update the modal title with the chapter title
     const modalTitle = modalElement.querySelector('.modal-title');
